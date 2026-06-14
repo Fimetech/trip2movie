@@ -748,20 +748,28 @@
   track("page_view", {page:"landing", price_variant:PRICE_VARIANT, standard_price:PRICES.standard, cinema_price:PRICES.cinema});
 
   /* ====== EMAIL CAPTURE — POST email + selected price + claim/gift to the DB ====== */
-  async function submitEmail(email, props){
-    props = props || {};
-    var kind = props.tier === "gift" ? "gift" : "claim";
-    var price = (props.price === 0 || props.price) ? Number(props.price) : null;
-    track("lead_captured", Object.assign({email_domain:(email.split("@")[1]||"")}, props));
+  var lastSignupEmail = null;
+  async function postSignup(email, payload){
     try{
       var res = await fetch("/api/subscribe", {
         method:"POST",
         headers:{"Content-Type":"application/json"},
-        body:JSON.stringify({email:email, price:price, kind:kind})
+        body:JSON.stringify(payload)
       });
       var data = await res.json();
       if(data && typeof data.count==="number"){ WAITLIST=data.count; setWaitlist(data.count); }
-    }catch(e){ /* best-effort: analytics already has the lead, never block the UI */ }
+    }catch(e){ /* best-effort: never block the UI */ }
+  }
+  async function submitEmail(email, props){
+    props = props || {};
+    var kind = props.tier === "gift" ? "gift" : "claim";
+    track("lead_captured", Object.assign({email_domain:(email.split("@")[1]||"")}, props));
+    // Price is recorded when the user picks a WTP chip after signup, not from the tier list price.
+    await postSignup(email, {email:email, kind:kind});
+    lastSignupEmail = email;
+  }
+  async function submitWtpPrice(email, amount){
+    await postSignup(email, {email:email, price:Number(amount)});
   }
   function isEmail(v){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);}
 
@@ -777,7 +785,9 @@
     var chip=e.target.closest && e.target.closest(".wtp-chip");
     if(!chip) return;
     var wrap=chip.closest(".wtp");
-    track("wtp_response", {amount:Number(chip.getAttribute("data-amount")), source:(wrap&&wrap.getAttribute("data-source"))||"unknown", price_variant:PRICE_VARIANT});
+    var amount=Number(chip.getAttribute("data-amount"));
+    track("wtp_response", {amount:amount, source:(wrap&&wrap.getAttribute("data-source"))||"unknown", price_variant:PRICE_VARIANT});
+    if(lastSignupEmail) submitWtpPrice(lastSignupEmail, amount);
     if(wrap){
       wrap.innerHTML='<p class="wtp-done"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg> Thanks — that helps us a lot.</p>';
       // In the modal, the WTP pick is the final step — auto-close once everything's done.

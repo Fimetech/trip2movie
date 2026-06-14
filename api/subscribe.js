@@ -20,7 +20,7 @@ export default async function handler(req, res) {
   }
 
   const price = body.price === 0 || body.price ? Number(body.price) : null;
-  const kind = body.kind === "gift" ? "gift" : "claim";
+  const kind = body.kind === "gift" ? "gift" : body.kind === "claim" ? "claim" : null;
 
   try {
     if (!sql) {
