@@ -66,6 +66,7 @@
   nav{position:sticky;top:0;z-index:100;background:rgba(244,246,250,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
   .nav-in{display:flex;align-items:center;justify-content:space-between;height:70px}
   .brand{display:flex;align-items:center;gap:11px;font-family:var(--serif);font-size:24px;font-weight:600;letter-spacing:-.01em}
+  .brand-logo{height:34px;width:auto;display:block}
   .mark{width:30px;height:30px;border-radius:9px;position:relative;flex:none;background:linear-gradient(150deg,var(--indigo),var(--indigo-deep));overflow:hidden;box-shadow:0 4px 12px -4px rgba(21,29,56,.5)}
   .mark::before{content:"";position:absolute;inset:0;background:radial-gradient(60% 60% at 50% 78%, rgba(238,108,77,.95), rgba(246,197,163,.35) 55%, transparent 72%)}
   .mark::after{content:"";position:absolute;left:50%;top:46%;transform:translate(-46%,-50%);border-left:8px solid #fff;border-top:5px solid transparent;border-bottom:5px solid transparent;opacity:.95}
@@ -135,9 +136,6 @@
   .play{position:absolute;z-index:6;left:50%;top:50%;transform:translate(-50%,-50%);width:64px;height:64px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.16);backdrop-filter:blur(3px);border:1.5px solid rgba(255,255,255,.6);transition:opacity .35s ease}
   .player.is-playing .play{opacity:0;pointer-events:none}
   .play svg{margin-left:4px}
-  .nowtag{position:absolute;z-index:6;left:16px;top:14px;display:flex;align-items:center;gap:8px;font-family:var(--sans);font-size:11.5px;color:rgba(255,255,255,.92);font-weight:500;max-width:66%}
-  .nowtag .led{width:6px;height:6px;border-radius:50%;background:var(--coral);box-shadow:0 0 8px var(--coral);flex:none}
-  .nowtag #nowCap{font-style:italic;transition:opacity .25s ease}
   .sound{position:absolute;z-index:6;left:50%;bottom:14px;transform:translateX(-50%);display:inline-flex;align-items:center;gap:9px;color:rgba(255,255,255,.92)}
   .eq{display:flex;align-items:flex-end;gap:2.5px;height:20px}
   .eq i{width:2.5px;border-radius:2px;background:linear-gradient(var(--peach),var(--coral));height:20%;animation:eq 1s ease-in-out infinite alternate}
@@ -206,8 +204,6 @@
   .hv-watch::after{content:"";position:absolute;inset:0;z-index:2;background:radial-gradient(130% 80% at 50% 120%,rgba(0,0,0,.42),transparent 60%)}
   .hv-play{position:absolute;z-index:3;left:50%;top:50%;transform:translate(-50%,-50%);width:50px;height:50px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.18);border:1.5px solid rgba(255,255,255,.65);backdrop-filter:blur(3px)}
   .hv-play svg{margin-left:3px}
-  .hv-now{position:absolute;z-index:3;left:14px;bottom:13px;display:inline-flex;align-items:center;gap:7px;font-size:11.5px;color:rgba(255,255,255,.94);font-weight:500}
-  .hv-now .led{width:6px;height:6px;border-radius:50%;background:var(--coral);box-shadow:0 0 8px var(--coral);flex:none}
 
   @media(max-width:760px){
     .how-flow{flex-direction:column;align-items:center;gap:8px;max-width:340px;margin-left:auto;margin-right:auto}
@@ -340,6 +336,7 @@
   footer{border-top:1px solid var(--line);padding:40px 0}
   .foot-in{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
   .foot-in .brand{font-size:21px}
+  .foot-in .brand-logo{height:30px}
   .foot-links{display:flex;gap:24px;font-size:14px;color:var(--ink-soft)}
   .foot-links a:hover{color:var(--ink)}
   .copy{font-size:13px;color:var(--ink-soft)}
@@ -389,16 +386,8 @@
 </style>
 
 <!-- ===== ANALYTICS =====
-     PostHog: autocaptures every click + scroll/pageleave; ingests our custom events.
-     Paste your Project API key below (Project Settings → API keys). Until then it's a
-     harmless no-op. Turn on Heatmaps / Session Replay from the PostHog dashboard. -->
-<script>
-  !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey getNextSurveyStep identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty createPersonProfile opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing debug getPageViewId captureTraceFeedback captureTraceMetric".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
-  var POSTHOG_KEY="phc_REPLACE_WITH_YOUR_PROJECT_KEY";
-  if(POSTHOG_KEY.indexOf("REPLACE")===-1){ posthog.init(POSTHOG_KEY,{api_host:"https://us.i.posthog.com",autocapture:true,capture_pageview:true,capture_pageleave:true}); }
-</script>
-
-<!-- Vercel Web Analytics (enable it under Project → Analytics; the script 404s until then). -->
+     Vercel Web Analytics handles all event tracking (enable it under Project → Analytics;
+     the script 404s locally / until enabled — harmless no-op). -->
 <script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments);};</script>
 <script defer src="/_vercel/insights/script.js"></script>
 </head>
@@ -406,7 +395,7 @@
 
 <nav>
   <div class="wrap nav-in">
-    <div class="brand"><span class="mark"></span>Trip2Movie</div>
+    <a class="brand" href="#" aria-label="Trip2Movie — home"><img class="brand-logo" src="assets/logo-horizontal.svg" alt="Trip2Movie" /></a>
     <div class="nav-links">
       <a class="lnk" href="#how">How it works</a>
       <a class="lnk" href="#themes">Themes</a>
@@ -435,21 +424,20 @@
             <span class="ingredient ing-clip-a"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M4 3l16 9-16 9z"/></svg>Clip &middot; 0:08</span>
             <span class="ingredient ing-clip-b"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M4 3l16 9-16 9z"/></svg>Clip &middot; 0:15</span>
           </div>
-          <div class="snap s1"><span class="pic p1"></span><img class="pic" src="assets/snap-1.jpg" alt="" onerror="this.remove()"></div>
-          <div class="snap s2"><span class="pic p2"></span><img class="pic" src="assets/snap-2.jpg" alt="" onerror="this.remove()"></div>
-          <div class="snap s3"><span class="pic p3"></span><img class="pic" src="assets/snap-3.jpg" alt="" onerror="this.remove()"></div>
+          <div class="snap s1"><span class="pic p1"></span><img class="pic" src="https://ercx1iugqkudkzyq.public.blob.vercel-storage.com/images/snap-1.jpg" alt="" onerror="this.remove()"></div>
+          <div class="snap s2"><span class="pic p2"></span><img class="pic" src="https://ercx1iugqkudkzyq.public.blob.vercel-storage.com/images/snap-2.jpg" alt="" onerror="this.remove()"></div>
+          <div class="snap s3"><span class="pic p3"></span><img class="pic" src="https://ercx1iugqkudkzyq.public.blob.vercel-storage.com/images/snap-3.jpg" alt="" onerror="this.remove()"></div>
         </div>
         <span class="becomes" aria-hidden="true">&darr;</span>
         <div class="player">
           <!-- The film cross-fades through these short clips. Save assets/movie-1..4.mp4 (16:9, muted). A missing clip falls back to its gradient. -->
           <div class="scene">
-            <div class="frame"><span class="ph f1"></span><video class="real" src="assets/movie-1.mp4" muted loop autoplay playsinline preload="auto" onerror="this.remove()"></video></div>
-            <div class="frame"><span class="ph f2"></span><video class="real" src="assets/movie-2.mp4" muted loop autoplay playsinline preload="auto" onerror="this.remove()"></video></div>
-            <div class="frame"><span class="ph f3"></span><video class="real" src="assets/movie-3.mp4" muted loop autoplay playsinline preload="auto" onerror="this.remove()"></video></div>
-            <div class="frame"><span class="ph f4"></span><video class="real" src="assets/movie-4.mp4" muted loop autoplay playsinline preload="auto" onerror="this.remove()"></video></div>
+            <div class="frame"><span class="ph f1"></span><video class="real" src="https://ercx1iugqkudkzyq.public.blob.vercel-storage.com/movies/movie-1.mp4" muted loop autoplay playsinline preload="auto" onerror="this.remove()"></video></div>
+            <div class="frame"><span class="ph f2"></span><video class="real" src="https://ercx1iugqkudkzyq.public.blob.vercel-storage.com/movies/movie-2.mp4" muted loop autoplay playsinline preload="auto" onerror="this.remove()"></video></div>
+            <div class="frame"><span class="ph f3"></span><video class="real" src="https://ercx1iugqkudkzyq.public.blob.vercel-storage.com/movies/movie-3.mp4" muted loop autoplay playsinline preload="auto" onerror="this.remove()"></video></div>
+            <div class="frame"><span class="ph f4"></span><video class="real" src="https://ercx1iugqkudkzyq.public.blob.vercel-storage.com/movies/movie-4.mp4" muted loop autoplay playsinline preload="auto" onerror="this.remove()"></video></div>
           </div>
           <div class="glow"></div><div class="vig"></div>
-          <div class="nowtag" aria-hidden="true"><span class="led"></span><span>Now playing &middot; <span id="nowCap">the waves on the first morning</span></span></div>
           <div class="play" aria-hidden="true"><svg width="18" height="22" viewBox="0 0 22 26" fill="#fff"><path d="M0 0l22 13L0 26z"/></svg></div>
           <div class="sound" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7" fill="none" stroke="currentColor" stroke-width="2"/></svg><span class="eq" id="eq"></span></div>
         </div>
@@ -487,9 +475,9 @@
       <div class="how-step" data-step="upload">
         <div class="how-vis hv-up">
           <div class="hv-stack" aria-hidden="true">
-            <span class="hv-photo p1"><img src="assets/snap-1.jpg" alt="" onerror="this.remove()"></span>
-            <span class="hv-photo p2"><img src="assets/snap-2.jpg" alt="" onerror="this.remove()"></span>
-            <span class="hv-photo p3"><img src="assets/snap-3.jpg" alt="" onerror="this.remove()"></span>
+            <span class="hv-photo p1"><img src="https://ercx1iugqkudkzyq.public.blob.vercel-storage.com/images/snap-1.jpg" alt="" onerror="this.remove()"></span>
+            <span class="hv-photo p2"><img src="https://ercx1iugqkudkzyq.public.blob.vercel-storage.com/images/snap-2.jpg" alt="" onerror="this.remove()"></span>
+            <span class="hv-photo p3"><img src="https://ercx1iugqkudkzyq.public.blob.vercel-storage.com/images/snap-3.jpg" alt="" onerror="this.remove()"></span>
           </div>
           <span class="hv-pill"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 16V4m0 0L8 8m4-4l4 4"/><path d="M4 16v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>Adding 24 photos &middot; 3 clips</span>
         </div>
@@ -510,9 +498,8 @@
 
       <div class="how-step" data-step="watch">
         <div class="how-vis hv-watch">
-          <video class="hv-film" src="assets/movie-2.mp4" muted loop playsinline preload="none" onerror="this.remove()"></video>
+          <video class="hv-film" src="https://4by3v7jnit0ke5yq.private.blob.vercel-storage.com/movies/movie-2.mp4?vercel-blob-valid-until=1781447790959&amp;vercel-blob-delegation=eyJzdG9yZUlkIjoic3RvcmVfNEJZM1Y3Sk5pdDBrZTVZUSIsIm93bmVySWQiOiJ0ZWFtX09PdlNNY3lOSDY1MUdaZFhkeVBtNU5scSIsInBhdGhuYW1lIjoiKiIsIm9wZXJhdGlvbnMiOlsiZ2V0IiwiaGVhZCJdLCJ2YWxpZFVudGlsIjoxNzgxNDkwMjM4MTAzLCJpYXQiOjE3ODE0NDcwMzg0NTB9.KnMoX5Q5VHEr0P3JlrFktFYcrv7CAEjgrNjtntVGFzI&amp;vercel-blob-signature=MHK5ThUhbfq1BXalNU4g2kghY-KrM23hr1gLPBAOfo8" muted loop playsinline preload="none" onerror="this.remove()"></video>
           <span class="hv-play" aria-hidden="true"><svg width="15" height="18" viewBox="0 0 22 26" fill="#fff"><path d="M0 0l22 13L0 26z"/></svg></span>
-          <span class="hv-now" aria-hidden="true"><span class="led"></span>Now playing &middot; your trip</span>
         </div>
         <div class="how-txt"><h3>Press play, together</h3><p>Minutes later your film is ready &mdash; watch it, share it in a tap, and keep it forever in HD.</p></div>
       </div>
@@ -533,19 +520,19 @@
          for production. -->
     <div class="themes">
       <div class="theme" data-theme="Golden Hour"><div class="swatch ta">
-        <video src="assets/movie-1.mp4" muted loop playsinline preload="none" onerror="this.remove()"></video>
+        <video src="https://4by3v7jnit0ke5yq.private.blob.vercel-storage.com/movies/movie-1.mp4?vercel-blob-valid-until=1781447769304&amp;vercel-blob-delegation=eyJzdG9yZUlkIjoic3RvcmVfNEJZM1Y3Sk5pdDBrZTVZUSIsIm93bmVySWQiOiJ0ZWFtX09PdlNNY3lOSDY1MUdaZFhkeVBtNU5scSIsInBhdGhuYW1lIjoiKiIsIm9wZXJhdGlvbnMiOlsiZ2V0IiwiaGVhZCJdLCJ2YWxpZFVudGlsIjoxNzgxNDkwMjM4MTAzLCJpYXQiOjE3ODE0NDcwMzg0NTB9.KnMoX5Q5VHEr0P3JlrFktFYcrv7CAEjgrNjtntVGFzI&amp;vercel-blob-signature=HB7tZSuiHiguNfVSiDRBloTivwym6CQmPhg5F1TimKo" muted loop playsinline preload="none" onerror="this.remove()"></video>
         <span class="t-tag"><span class="eq"><i></i><i></i><i></i><i></i></span>Golden Hour</span>
       </div><div class="lbl"><h3>Golden Hour</h3><p>Warm, slow and tender. For the trips you want to linger in.</p></div></div>
       <div class="theme" data-theme="Grand Adventure"><div class="swatch tb">
-        <video src="assets/movie-2.mp4" muted loop playsinline preload="none" onerror="this.remove()"></video>
+        <video src="https://4by3v7jnit0ke5yq.private.blob.vercel-storage.com/movies/movie-2.mp4?vercel-blob-valid-until=1781447790959&amp;vercel-blob-delegation=eyJzdG9yZUlkIjoic3RvcmVfNEJZM1Y3Sk5pdDBrZTVZUSIsIm93bmVySWQiOiJ0ZWFtX09PdlNNY3lOSDY1MUdaZFhkeVBtNU5scSIsInBhdGhuYW1lIjoiKiIsIm9wZXJhdGlvbnMiOlsiZ2V0IiwiaGVhZCJdLCJ2YWxpZFVudGlsIjoxNzgxNDkwMjM4MTAzLCJpYXQiOjE3ODE0NDcwMzg0NTB9.KnMoX5Q5VHEr0P3JlrFktFYcrv7CAEjgrNjtntVGFzI&amp;vercel-blob-signature=MHK5ThUhbfq1BXalNU4g2kghY-KrM23hr1gLPBAOfo8" muted loop playsinline preload="none" onerror="this.remove()"></video>
         <span class="t-tag"><span class="eq"><i></i><i></i><i></i><i></i></span>Grand Adventure</span>
       </div><div class="lbl"><h3>Grand Adventure</h3><p>Sweeping and cinematic. Big landscapes, bigger feeling.</p></div></div>
       <div class="theme" data-theme="Little Moments"><div class="swatch tc">
-        <video src="assets/movie-3.mp4" muted loop playsinline preload="none" onerror="this.remove()"></video>
+        <video src="https://4by3v7jnit0ke5yq.private.blob.vercel-storage.com/movies/movie-3.mp4?vercel-blob-valid-until=1781447796349&amp;vercel-blob-delegation=eyJzdG9yZUlkIjoic3RvcmVfNEJZM1Y3Sk5pdDBrZTVZUSIsIm93bmVySWQiOiJ0ZWFtX09PdlNNY3lOSDY1MUdaZFhkeVBtNU5scSIsInBhdGhuYW1lIjoiKiIsIm9wZXJhdGlvbnMiOlsiZ2V0IiwiaGVhZCJdLCJ2YWxpZFVudGlsIjoxNzgxNDkwMjM4MTAzLCJpYXQiOjE3ODE0NDcwMzg0NTB9.KnMoX5Q5VHEr0P3JlrFktFYcrv7CAEjgrNjtntVGFzI&amp;vercel-blob-signature=7KUpmLDWj4F1DslfqqPbFedPWD_UB34q7_51bodqbYc" muted loop playsinline preload="none" onerror="this.remove()"></video>
         <span class="t-tag"><span class="eq"><i></i><i></i><i></i><i></i></span>Little Moments</span>
       </div><div class="lbl"><h3>Little Moments</h3><p>Intimate and family-first. The small stuff, made the main event.</p></div></div>
       <div class="theme" data-theme="Wanderlust"><div class="swatch td">
-        <video src="assets/movie-4.mp4" muted loop playsinline preload="none" onerror="this.remove()"></video>
+        <video src="https://4by3v7jnit0ke5yq.private.blob.vercel-storage.com/movies/movie-4.mp4?vercel-blob-valid-until=1781447803216&amp;vercel-blob-delegation=eyJzdG9yZUlkIjoic3RvcmVfNEJZM1Y3Sk5pdDBrZTVZUSIsIm93bmVySWQiOiJ0ZWFtX09PdlNNY3lOSDY1MUdaZFhkeVBtNU5scSIsInBhdGhuYW1lIjoiKiIsIm9wZXJhdGlvbnMiOlsiZ2V0IiwiaGVhZCJdLCJ2YWxpZFVudGlsIjoxNzgxNDkwMjM4MTAzLCJpYXQiOjE3ODE0NDcwMzg0NTB9.KnMoX5Q5VHEr0P3JlrFktFYcrv7CAEjgrNjtntVGFzI&amp;vercel-blob-signature=WBu4C87zTP9uRCjfU7TGUY168FSPzwYmgz-9wimsFhc" muted loop playsinline preload="none" onerror="this.remove()"></video>
         <span class="t-tag"><span class="eq"><i></i><i></i><i></i><i></i></span>Wanderlust</span>
       </div><div class="lbl"><h3>Wanderlust</h3><p>Bright and wide-eyed. The thrill of somewhere new.</p></div></div>
     </div>
@@ -676,7 +663,7 @@
 
 <footer>
   <div class="wrap foot-in">
-    <div class="brand"><span class="mark"></span>Trip2Movie</div>
+    <a class="brand" href="#" aria-label="Trip2Movie — home"><img class="brand-logo" src="assets/logo-horizontal.svg" alt="Trip2Movie" /></a>
     <div class="foot-links">
       <a href="#how">How it works</a>
       <a href="#pricing">Pricing</a>
@@ -716,17 +703,11 @@
   function setWaitlist(n){ var pc=document.getElementById("proofCount"); if(pc && typeof n==="number") pc.textContent = n.toLocaleString(); }
   setWaitlist(WAITLIST);
   fetch("/api/waitlist").then(function(r){return r.json();}).then(function(d){ if(d && typeof d.count==="number"){ WAITLIST=d.count; setWaitlist(d.count); } }).catch(function(){});
-  var lastEmail = null;
 
-  /* ====== ANALYTICS — custom events fan out to PostHog + Vercel + our DB ====== */
-  var DB_EVENTS = { pricing_cta_click:1, wtp_response:1, cta_click:1, nav_click:1, theme_click:1, how_step_click:1 };
+  /* ====== ANALYTICS — every button/form event goes to Vercel Web Analytics ====== */
   function track(event, props){
     props = props || {};
-    try{ if(window.posthog && posthog.capture) posthog.capture(event, props); }catch(e){}
     try{ if(window.va) window.va("event", Object.assign({name:event}, props)); }catch(e){}
-    if(DB_EVENTS[event]){
-      try{ fetch("/api/event", {method:"POST", headers:{"Content-Type":"application/json"}, keepalive:true, body:JSON.stringify(Object.assign({name:event, email:lastEmail}, props))}); }catch(e){}
-    }
     console.log("[track]", event, props);
   }
 
@@ -766,17 +747,17 @@
 
   track("page_view", {page:"landing", price_variant:PRICE_VARIANT, standard_price:PRICES.standard, cinema_price:PRICES.cinema});
 
-  /* ====== EMAIL CAPTURE — POST to the Vercel function + tie email to the PostHog profile ====== */
+  /* ====== EMAIL CAPTURE — POST email + selected price + claim/gift to the DB ====== */
   async function submitEmail(email, props){
     props = props || {};
-    lastEmail = email;
-    try{ if(window.posthog && posthog.identify) posthog.identify(email, {email:email}); }catch(e){}
+    var kind = props.tier === "gift" ? "gift" : "claim";
+    var price = (props.price === 0 || props.price) ? Number(props.price) : null;
     track("lead_captured", Object.assign({email_domain:(email.split("@")[1]||"")}, props));
     try{
       var res = await fetch("/api/subscribe", {
         method:"POST",
         headers:{"Content-Type":"application/json"},
-        body:JSON.stringify(Object.assign({email:email}, props))
+        body:JSON.stringify({email:email, price:price, kind:kind})
       });
       var data = await res.json();
       if(data && typeof data.count==="number"){ WAITLIST=data.count; setWaitlist(data.count); }
@@ -815,14 +796,11 @@
     });
   });
 
-  /* ====== audible cues: equalizer bars + rotating sensory caption ====== */
+  /* ====== audible cues: equalizer bars ====== */
   var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   (function(){
     var eq=document.getElementById("eq");
     if(eq){ for(var i=0;i<18;i++){ var b=document.createElement("i"); b.style.animationDelay=(Math.random()).toFixed(2)+"s"; b.style.animationDuration=(0.7+Math.random()*0.7).toFixed(2)+"s"; eq.appendChild(b); } }
-    var caps=["the waves on the first morning","the playlist on the long drive","everyone singing happy birthday","rain on the tent at night"];
-    var nc=document.getElementById("nowCap"), ci=0;
-    if(nc && !reduce){ setInterval(function(){ ci=(ci+1)%caps.length; nc.style.opacity=0; setTimeout(function(){ nc.textContent=caps[ci]; nc.style.opacity=1; },250); }, 4000); }
   })();
 
   /* ====== hide the decorative play button once a real clip is playing ====== */
@@ -898,7 +876,7 @@
   overlay.addEventListener("click", function(e){ if(e.target===overlay) closeModal(); });
   document.addEventListener("keydown", function(e){ if(e.key==="Escape" && overlay.classList.contains("on")) closeModal(); });
 
-  /* ====== navigation + content interactions — fan out to PostHog + Vercel + our DB ====== */
+  /* ====== navigation + content interactions — tracked via Vercel Web Analytics ====== */
   (function(){
     document.querySelectorAll('.nav-links a.lnk, .foot-links a[href^="#"]').forEach(function(a){
       a.addEventListener("click", function(){

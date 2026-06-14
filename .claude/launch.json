@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "trip2movie",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "4599", "--directory", "/Users/arsen/workspace/fimetech/trip2movie"],
+      "port": 4599
+    }
+  ]
+}
