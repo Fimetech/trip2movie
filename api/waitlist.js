@@ -1,7 +1,6 @@
-// GET /api/waitlist — returns the live, DB-backed waitlist number to display.
-// count = WAITLIST_SEED + real signups, so it feels established and moves with real activity.
+// GET /api/waitlist — returns the live signup count from the database.
 
-import { ensureSchema, waitlistCount, WAITLIST_SEED } from "../lib/db.js";
+import { ensureSchema, waitlistCount } from "../lib/db.js";
 
 export default async function handler(req, res) {
   res.setHeader("Cache-Control", "no-store");
@@ -11,6 +10,6 @@ export default async function handler(req, res) {
     return res.status(200).json({ count });
   } catch (e) {
     console.error("[waitlist] error:", e);
-    return res.status(200).json({ count: WAITLIST_SEED });
+    return res.status(200).json({ count: 0 });
   }
 }

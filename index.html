@@ -17,7 +17,7 @@
      placeholder shows instead, so the page never looks broken.
      See trip2movie-hero-images.md for ready-to-paste generation prompts.
 
-     CONFIG (waitlist number) -> search "SET TO REAL".
+     CONFIG (waitlist number) -> fetched live from /api/waitlist.
      WIRE-UP #1 (email backend) and #2 (analytics) -> search "WIRE-UP".
      ============================================================ -->
 
@@ -454,7 +454,7 @@
     <div class="proof">
       <span class="avatars"><i class="a1"><img src="assets/avatars/1.jpg" alt="" onerror="this.remove()"></i><i class="a2"><img src="assets/avatars/2.jpg" alt="" onerror="this.remove()"></i><i class="a3"><img src="assets/avatars/3.jpg" alt="" onerror="this.remove()"></i><i class="a4"><img src="assets/avatars/4.jpg" alt="" onerror="this.remove()"></i></span>
       <span class="proof-txt">
-        <span class="proof-lead"><span class="live" aria-hidden="true"></span><strong id="proofCount" class="count">3,120</strong> families on the waitlist</span>
+        <span class="proof-lead"><span class="live" aria-hidden="true"></span><strong id="proofCount" class="count">…</strong> families on the waitlist</span>
         <span class="proof-sub">New invites every week &middot; <span class="muted">Private &amp; free to try</span></span>
       </span>
     </div>
@@ -698,10 +698,9 @@
 </div>
 
 <script>
-  /* ====== CONFIG — SET TO REAL NUMBER (bind to your real waitlist count) ====== */
-  var WAITLIST = 3120; // fallback only; the real number comes from /api/waitlist (DB-backed)
+  /* ====== WAITLIST COUNT — loaded from /api/waitlist (DB-backed) ====== */
+  var WAITLIST = null;
   function setWaitlist(n){ var pc=document.getElementById("proofCount"); if(pc && typeof n==="number") pc.textContent = n.toLocaleString(); }
-  setWaitlist(WAITLIST);
   fetch("/api/waitlist").then(function(r){return r.json();}).then(function(d){ if(d && typeof d.count==="number"){ WAITLIST=d.count; setWaitlist(d.count); } }).catch(function(){});
 
   /* ====== ANALYTICS — every button/form event goes to Vercel Web Analytics ====== */
