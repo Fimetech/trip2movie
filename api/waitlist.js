@@ -1,6 +1,6 @@
-// GET /api/waitlist — returns the live signup count from the database.
+// GET /api/waitlist — returns the displayed waitlist count (derived from real signups).
 
-import { ensureSchema, waitlistCount } from "../lib/db.js";
+import { ensureSchema, waitlistCount, displayWaitlistCount } from "../lib/db.js";
 
 export default async function handler(req, res) {
   res.setHeader("Cache-Control", "no-store");
@@ -10,6 +10,6 @@ export default async function handler(req, res) {
     return res.status(200).json({ count });
   } catch (e) {
     console.error("[waitlist] error:", e);
-    return res.status(200).json({ count: 0 });
+    return res.status(200).json({ count: displayWaitlistCount(0) });
   }
 }

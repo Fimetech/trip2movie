@@ -2,7 +2,7 @@
 // Body: { email, wtp_price?, kind? }   kind = "claim" | "gift"
 // De-dupes on email (a refresh/resubmit won't inflate the count).
 
-import { sql, ensureSchema, waitlistCount } from "../lib/db.js";
+import { sql, ensureSchema, waitlistCount, displayWaitlistCount } from "../lib/db.js";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
@@ -25,7 +25,7 @@ export default async function handler(req, res) {
   try {
     if (!sql) {
       console.log("[subscribe] no DB configured — record:", { email, wtp_price: wtpPrice, kind });
-      return res.status(200).json({ ok: true, count: 0 });
+      return res.status(200).json({ ok: true, count: displayWaitlistCount(0) });
     }
     await ensureSchema();
     await sql`
@@ -40,6 +40,6 @@ export default async function handler(req, res) {
   } catch (e) {
     console.error("[subscribe] error:", e);
     // Never block the user's signup UX on a storage hiccup.
-    return res.status(200).json({ ok: true, count: 0 });
+    return res.status(200).json({ ok: true, count: displayWaitlistCount(0) });
   }
 }
