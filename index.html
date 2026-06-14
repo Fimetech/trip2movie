@@ -475,7 +475,7 @@
       </div>
     </form>
     <div class="proof">
-      <span class="avatars" id="proofAvatars"><i class="a1"><img src="assets/avatars/1.jpg" alt="" onerror="this.remove()"></i><i class="a2"><img src="assets/avatars/2.jpg" alt="" onerror="this.remove()"></i><i class="a3"><img src="assets/avatars/3.jpg" alt="" onerror="this.remove()"></i><i class="a4"><img src="assets/avatars/4.jpg" alt="" onerror="this.remove()"></i></span>
+      <span class="avatars" id="proofAvatars"><i class="a1"><img src="https://iggv7s70mkfvuteh.public.blob.vercel-storage.com/avatar/1.jpg" alt=""></i><i class="a2"><img src="https://iggv7s70mkfvuteh.public.blob.vercel-storage.com/avatar/2.jpg" alt=""></i><i class="a3"><img src="https://iggv7s70mkfvuteh.public.blob.vercel-storage.com/avatar/3.jpg" alt=""></i><i class="a4"><img src="https://iggv7s70mkfvuteh.public.blob.vercel-storage.com/avatar/4.jpg" alt=""></i></span>
       <span class="proof-txt">
         <span class="proof-lead"><span class="live" aria-hidden="true"></span><strong id="proofCount" class="count">…</strong> families on the waitlist</span>
         <span class="proof-sub">New invites every week &middot; <span class="muted">Private &amp; free to try</span></span>
@@ -743,6 +743,25 @@
   var WAITLIST = null;
   function setWaitlist(n){ var pc=document.getElementById("proofCount"); if(pc && typeof n==="number") pc.textContent = n.toLocaleString(); }
   fetch("/api/waitlist").then(function(r){return r.json();}).then(function(d){ if(d && typeof d.count==="number"){ WAITLIST=d.count; setWaitlist(d.count); } }).catch(function(){});
+
+  /* ====== PROOF AVATARS — randomly pick distinct faces from the 13 available ======
+     On a load error we fall back to another *unused* avatar from the shuffled pool,
+     so a transient miss never leaves a bare gradient where a face should be. */
+  (function(){
+    var box=document.getElementById("proofAvatars");
+    if(!box) return;
+    var base="https://iggv7s70mkfvuteh.public.blob.vercel-storage.com/avatar/";
+    var pool=[]; for(var i=1;i<=13;i++) pool.push(i);
+    for(var j=pool.length-1;j>0;j--){ var k=Math.floor(Math.random()*(j+1)); var t=pool[j]; pool[j]=pool[k]; pool[k]=t; }
+    var imgs=box.querySelectorAll("img"), next=imgs.length; // remaining pool entries become fallbacks
+    imgs.forEach(function(img,idx){
+      img.onerror=function(){
+        if(next<pool.length){ img.src=base+pool[next++]+".jpg"; } // retry with another face
+        else { img.onerror=null; img.remove(); }                 // pool exhausted: let the gradient show
+      };
+      img.src=base+pool[idx]+".jpg";
+    });
+  })();
 
   /* ====== WAITLIST AVATARS — a pool of 24, 4 shown at random each load =========
      Images are named 1.jpg … 24.jpg. They load from AVATAR_BASE when set (paste
