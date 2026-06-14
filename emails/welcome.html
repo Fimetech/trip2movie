@@ -1,0 +1,143 @@
+<!--
+  trip2movie — waitlist welcome email.
+  Short, emotional, on-brand. Table-based + inline styles for email-client compatibility.
+  Sending: paste into Resend / Loops / Klaviyo / Mailchimp, or send from a Vercel function via
+  Resend. Replace {{first_name}} / the testimonial / the {{site_url}} + {{unsubscribe_url}} tokens.
+  The testimonial is an illustrative early-tester quote — swap for a real one before launch.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="x-apple-disable-message-reformatting" />
+<title>Welcome to Trip2Movie</title>
+<style>
+  /* Progressive enhancement only — core layout works without it. */
+  body{margin:0;padding:0;background:#F4F6FA;}
+  .sans{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;}
+  .serif{font-family:Georgia,'Times New Roman',serif;}
+  a{color:#DE5436;}
+  @media (max-width:600px){
+    .container{width:100% !important;}
+    .px{padding-left:24px !important;padding-right:24px !important;}
+    .h1{font-size:28px !important;line-height:1.15 !important;}
+  }
+</style>
+</head>
+<body style="margin:0;padding:0;background:#F4F6FA;">
+  <!-- Preheader (hidden preview text) -->
+  <div style="display:none;max-height:0;overflow:hidden;opacity:0;color:#F4F6FA;font-size:1px;line-height:1px;">
+    Your photos are silent. Your trip wasn’t — and you’re on the list.
+  </div>
+
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#F4F6FA;">
+    <tr>
+      <td align="center" style="padding:32px 16px;">
+        <table role="presentation" class="container" width="600" cellpadding="0" cellspacing="0" style="width:600px;max-width:600px;background:#FFFFFF;border-radius:20px;overflow:hidden;box-shadow:0 24px 60px -30px rgba(27,37,64,.35);">
+
+          <!-- Brand -->
+          <tr>
+            <td class="px" style="padding:30px 44px 8px 44px;">
+              <table role="presentation" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td style="background:#151D38;border-radius:9px;width:34px;height:34px;text-align:center;vertical-align:middle;color:#EE6C4D;font-size:15px;">&#9658;</td>
+                  <td style="padding-left:11px;" class="serif"><span style="font-size:23px;font-weight:600;color:#1B2540;letter-spacing:-.01em;">Trip2Movie</span></td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Headline -->
+          <tr>
+            <td class="px serif" style="padding:22px 44px 0 44px;">
+              <h1 class="h1" style="margin:0;font-size:34px;line-height:1.1;font-weight:500;color:#1B2540;letter-spacing:-.01em;">
+                Your trip is about to get<br /><em style="color:#DE5436;font-style:italic;">its sound back.</em>
+              </h1>
+            </td>
+          </tr>
+
+          <!-- Body -->
+          <tr>
+            <td class="px sans" style="padding:20px 44px 0 44px;">
+              <p style="margin:0;font-size:16px;line-height:1.6;color:#5C6680;">
+                You’re on the list — thank you. Soon you’ll turn your travel photos and clips into a
+                short cinematic film: your own footage with the sound back on, an original score
+                underneath, and one tap that puts you right back there — with the people you love.
+              </p>
+            </td>
+          </tr>
+
+          <!-- Testimonial -->
+          <tr>
+            <td class="px" style="padding:26px 44px 0 44px;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#FBE6D6;border-radius:16px;">
+                <tr>
+                  <td class="serif" style="padding:22px 24px;">
+                    <p style="margin:0;font-size:17px;line-height:1.5;font-style:italic;color:#1B2540;">
+                      “The first time my kids saw our summer as a film — the real sound of the waves,
+                      their own giggles — my daughter asked to watch it three times. I cried by the second.”
+                    </p>
+                    <p class="sans" style="margin:12px 0 0 0;font-size:13px;font-weight:600;color:#DE5436;letter-spacing:.02em;">
+                      MAYA R. &middot; EARLY TESTER
+                    </p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- What's next -->
+          <tr>
+            <td class="px sans" style="padding:24px 44px 0 44px;">
+              <p style="margin:0;font-size:16px;line-height:1.6;color:#5C6680;">
+                We’re sending invites in small batches each week, so every film gets the care it
+                deserves. Watch your inbox — <strong style="color:#1B2540;">yours is coming.</strong>
+              </p>
+            </td>
+          </tr>
+
+          <!-- CTA -->
+          <tr>
+            <td class="px" style="padding:28px 44px 4px 44px;">
+              <table role="presentation" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td style="background:#DE5436;border-radius:999px;">
+                    <a href="{{site_url}}" class="sans" style="display:inline-block;padding:15px 30px;font-size:15px;font-weight:600;color:#FFFFFF;text-decoration:none;">
+                      See a sample film &rarr;
+                    </a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Sign-off -->
+          <tr>
+            <td class="px serif" style="padding:26px 44px 34px 44px;">
+              <p style="margin:0;font-size:16px;font-style:italic;color:#5C6680;">Relive it — sound and all,<br />The Trip2Movie team</p>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="padding:0 44px;">
+              <div style="border-top:1px solid rgba(27,37,64,.12);"></div>
+            </td>
+          </tr>
+          <tr>
+            <td class="px sans" style="padding:18px 44px 30px 44px;">
+              <p style="margin:0;font-size:12px;line-height:1.5;color:#9aa2b8;">
+                You’re receiving this because you joined the Trip2Movie waitlist.
+                <a href="{{unsubscribe_url}}" style="color:#9aa2b8;text-decoration:underline;">Unsubscribe</a>.<br />
+                &copy; 2026 Trip2Movie.
+              </p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

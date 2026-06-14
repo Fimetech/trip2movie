@@ -1,0 +1,35 @@
+# Dependencies & platform output (no useful context for the model)
+node_modules/
+.vercel/
+dist/
+build/
+.cache/
+
+# Secrets — never expose to the model
+.env
+.env.*
+
+# Lockfiles (large, low signal)
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
+# Binary media — not useful as code context, expensive to index
+*.mp4
+*.mov
+*.webm
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.webp
+*.avif
+*.ico
+*.pdf
+*.zip
+
+# OS noise
+.DS_Store
+
+# Stray / scratch
+assets/_incoming/

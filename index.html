@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Trip2Movie — Hear your trip again</title>
+<meta name="description" content="Trip2Movie turns your travel photos and clips into a short cinematic film — with sound, music, and the moments you forgot you could feel again. Watch it with the people you love." />
+
+<!-- ============================================================
+     trip2movie — fake-door landing page
+     HERO REEL: scattered photos resolve into ONE cinematic film.
+     >>> Drop your generated photos into an /assets folder next to this file:
+         assets/snap-1.jpg  snap-2.jpg  snap-3.jpg   (the 3 fanned cards, 4:5)
+         assets/movie-1.jpg movie-2.jpg movie-3.jpg movie-4.jpg  (the movie keyframes, 16:9)
+     They load automatically and the movie cross-fades through them
+     (= real frame transitions). If a file is missing, a styled
+     placeholder shows instead, so the page never looks broken.
+     See trip2movie-hero-images.md for ready-to-paste generation prompts.
+
+     CONFIG (waitlist number) -> search "SET TO REAL".
+     WIRE-UP #1 (email backend) and #2 (analytics) -> search "WIRE-UP".
+     ============================================================ -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500;1,6..72,600&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+<style>
+  :root{
+    --paper:#F4F6FA; --card:#FFFFFF;
+    --ink:#1B2540; --ink-soft:#5C6680;
+    --indigo:#26345F; --indigo-deep:#151D38;
+    --peach:#F6C5A3; --peach-soft:#FBE6D6;
+    --coral:#EE6C4D; --coral-cta:#DE5436;
+    --gold:#E6B15A; --line:rgba(27,37,64,.12);
+    --serif:"Newsreader",Georgia,"Times New Roman",serif;
+    --sans:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    --wrap:1120px; --r:20px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  /* offset anchored sections so the sticky 70px nav doesn't cover their headings */
+  #how,#themes,#pricing,#gift,#faq{scroll-margin-top:90px}
+  @media(max-width:400px){#how,#themes,#pricing,#gift,#faq{scroll-margin-top:74px}}
+  body{font-family:var(--sans);color:var(--ink);background:var(--paper);line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+  .wrap{max-width:var(--wrap);margin:0 auto;padding:0 24px}
+  .eyebrow{font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--coral);display:inline-block}
+  .eyebrow.dim{color:var(--ink-soft)}
+  h1,h2,h3{font-family:var(--serif);font-weight:500;line-height:1.06;letter-spacing:-.005em}
+  h1 em,h2 em{font-style:italic;font-weight:500;color:var(--coral)}
+  p{color:var(--ink-soft)}
+
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:.5em;font-family:var(--sans);font-weight:600;font-size:15px;
+    padding:15px 28px;border-radius:999px;border:0;cursor:pointer;background:var(--coral-cta);color:#fff;
+    transition:transform .18s ease,background .18s ease,box-shadow .18s ease;white-space:nowrap;box-shadow:0 8px 20px -8px rgba(222,84,54,.55)}
+  .btn:hover{background:#c9462b;transform:translateY(-2px);box-shadow:0 14px 28px -10px rgba(222,84,54,.6)}
+  .btn:focus-visible{outline:3px solid var(--peach);outline-offset:2px}
+  .btn.ind{background:var(--indigo);box-shadow:0 8px 20px -10px rgba(38,52,95,.5)}
+  .btn.ind:hover{background:var(--indigo-deep)}
+  .btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line);box-shadow:none}
+  .btn.ghost:hover{background:rgba(27,37,64,.04);border-color:rgba(27,37,64,.28)}
+
+  /* nav */
+  nav{position:sticky;top:0;z-index:100;background:rgba(244,246,250,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .nav-in{display:flex;align-items:center;justify-content:space-between;height:70px}
+  .brand{display:flex;align-items:center;gap:11px;font-family:var(--serif);font-size:24px;font-weight:600;letter-spacing:-.01em}
+  .mark{width:30px;height:30px;border-radius:9px;position:relative;flex:none;background:linear-gradient(150deg,var(--indigo),var(--indigo-deep));overflow:hidden;box-shadow:0 4px 12px -4px rgba(21,29,56,.5)}
+  .mark::before{content:"";position:absolute;inset:0;background:radial-gradient(60% 60% at 50% 78%, rgba(238,108,77,.95), rgba(246,197,163,.35) 55%, transparent 72%)}
+  .mark::after{content:"";position:absolute;left:50%;top:46%;transform:translate(-46%,-50%);border-left:8px solid #fff;border-top:5px solid transparent;border-bottom:5px solid transparent;opacity:.95}
+  .nav-links{display:flex;align-items:center;gap:26px}
+  .nav-links a.lnk{position:relative;font-size:14.5px;font-weight:500;color:var(--ink-soft)}
+  .nav-links a.lnk::after{content:"";position:absolute;left:0;right:0;bottom:-5px;height:2px;border-radius:2px;background:var(--coral);transform:scaleX(0);transform-origin:left;transition:transform .2s ease}
+  .nav-links a.lnk:hover{color:var(--ink)}
+  .nav-links a.lnk:hover::after{transform:scaleX(1)}
+  .nav-cta{padding:10px 18px;font-size:14px}
+  @media(max-width:760px){.nav-links a.lnk{display:none}}
+
+  /* hero */
+  .hero{padding:60px 0 64px;text-align:center}
+  .hero h1{font-size:clamp(30px,4.8vw,52px);margin:0 auto;max-width:22ch;text-wrap:balance}
+  .hero .sub{font-size:clamp(16px,1.7vw,19px);margin:22px auto 0;max-width:52ch;color:var(--ink-soft);text-wrap:pretty}
+
+  /* signature: scattered photos -> one film */
+  .stage{margin:52px auto 0}
+  .reel{display:flex;align-items:center;justify-content:center}
+  .becomes{display:none}
+  .snap{background:#fff;border-radius:13px;box-shadow:0 22px 44px -18px rgba(27,37,64,.5);flex:none;position:relative}
+  .snap .pic{position:absolute;inset:7px;border-radius:8px;overflow:hidden}
+  .snap img.pic{width:calc(100% - 14px);height:calc(100% - 14px);object-fit:cover;z-index:2}
+  .snap span.pic{z-index:1}
+  .snap span.pic::after{content:"";position:absolute;inset:0;border-radius:inherit;background:radial-gradient(120% 60% at 30% 16%, rgba(255,255,255,.3), transparent 55%), radial-gradient(130% 95% at 50% 125%, rgba(0,0,0,.32), transparent 60%)}
+  .p1{background:linear-gradient(160deg,#ffd29a,#ee8a5a 60%,#9c4a3a)}
+  .p2{background:linear-gradient(160deg,#f8d3cc,#e08c82 55%,#8a4a52)}
+  .p3{background:linear-gradient(160deg,#c8e2c2,#5e9e6a 55%,#27513a)}
+  .snap.s1{width:114px;height:142px;z-index:1;transform:rotate(-2deg)}
+  .snap.s2{width:132px;height:165px;margin-left:-12px;z-index:2;transform:rotate(.6deg)}
+  .snap.s3{width:152px;height:190px;margin-left:-12px;z-index:3}
+  /* the snap stack + the other "ingredients" (audio note, clip) feeding the film */
+  .snaps{position:relative;display:flex;align-items:center}
+  .ingredients{position:absolute;inset:0;z-index:7;pointer-events:none}
+  .ingredient{position:absolute;display:inline-flex;align-items:center;gap:6px;pointer-events:auto;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:6px 11px;font-size:11.5px;font-weight:600;color:var(--ink);white-space:nowrap;box-shadow:0 12px 26px -12px rgba(27,37,64,.45)}
+  .ingredient svg{color:var(--coral-cta);flex:none}
+  .ing-audio{top:-16px;left:-22px;transform:rotate(-4deg)}
+  .ing-sound{top:-20px;left:128px;transform:rotate(4deg)}
+  .ing-voice{bottom:34px;left:-30px;transform:rotate(-6deg)}
+  .ing-clip-a{bottom:-14px;left:2px;transform:rotate(4deg)}
+  .ing-clip-b{bottom:-10px;right:64px;transform:rotate(-3deg)}
+  .ing-dur{color:var(--ink-soft);font-variant-numeric:tabular-nums}
+  .ewave{display:inline-flex;align-items:flex-end;gap:2px;height:13px}
+  .ewave i{width:2px;border-radius:2px;background:linear-gradient(var(--peach),var(--coral));height:35%;animation:eq 1s ease-in-out infinite alternate}
+  .ewave i:nth-child(1){height:40%;animation-delay:0s}
+  .ewave i:nth-child(2){height:85%;animation-delay:.18s}
+  .ewave i:nth-child(3){height:55%;animation-delay:.07s}
+  .ewave i:nth-child(4){height:95%;animation-delay:.25s}
+  .ewave i:nth-child(5){height:48%;animation-delay:.13s}
+  .player{position:relative;flex:none;width:min(540px,50vw);aspect-ratio:16/9;margin-left:-18px;z-index:4;border-radius:16px;overflow:hidden;background:linear-gradient(160deg,#243660,#151d38);box-shadow:0 50px 90px -40px rgba(21,29,56,.65),0 0 0 1px rgba(255,255,255,.05);isolation:isolate}
+  .scene{position:absolute;inset:0}
+  .scene .frame{position:absolute;inset:0;opacity:0;animation:reel 16s infinite}
+  .scene .frame > *{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .scene .frame .real{z-index:1}
+  .scene .frame:nth-child(1){animation-delay:0s}
+  .scene .frame:nth-child(2){animation-delay:4s}
+  .scene .frame:nth-child(3){animation-delay:8s}
+  .scene .frame:nth-child(4){animation-delay:12s}
+  .f1{background:linear-gradient(165deg,#ffd29a,#ee8a5a 52%,#9c4a3a)}
+  .f2{background:linear-gradient(165deg,#b9c6e6,#5a6fa6 50%,#1e2747)}
+  .f3{background:linear-gradient(160deg,#f8c7c0,#e07d72 52%,#7e3a48)}
+  .f4{background:linear-gradient(165deg,#c8e2c2,#5e9e6a 50%,#27513a)}
+  .scene .frame::after{content:"";position:absolute;inset:0;z-index:2;background:radial-gradient(130% 80% at 50% 125%, rgba(0,0,0,.34), transparent 58%)}
+  @keyframes reel{0%{opacity:0;transform:scale(1.14) translate(-2%,-1%)}4%{opacity:1}23%{opacity:1;transform:scale(1.02) translate(0,0)}27%{opacity:0}100%{opacity:0}}
+  .glow{position:absolute;inset:0;z-index:3;pointer-events:none;background:radial-gradient(55% 50% at 50% 40%, rgba(246,197,163,.26), transparent 72%);mix-blend-mode:screen}
+  .vig{position:absolute;inset:0;z-index:4;pointer-events:none;box-shadow:inset 0 0 120px 24px rgba(0,0,0,.42)}
+  .play{position:absolute;z-index:6;left:50%;top:50%;transform:translate(-50%,-50%);width:64px;height:64px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.16);backdrop-filter:blur(3px);border:1.5px solid rgba(255,255,255,.6);transition:opacity .35s ease}
+  .player.is-playing .play{opacity:0;pointer-events:none}
+  .play svg{margin-left:4px}
+  .nowtag{position:absolute;z-index:6;left:16px;top:14px;display:flex;align-items:center;gap:8px;font-family:var(--sans);font-size:11.5px;color:rgba(255,255,255,.92);font-weight:500;max-width:66%}
+  .nowtag .led{width:6px;height:6px;border-radius:50%;background:var(--coral);box-shadow:0 0 8px var(--coral);flex:none}
+  .nowtag #nowCap{font-style:italic;transition:opacity .25s ease}
+  .sound{position:absolute;z-index:6;left:50%;bottom:14px;transform:translateX(-50%);display:inline-flex;align-items:center;gap:9px;color:rgba(255,255,255,.92)}
+  .eq{display:flex;align-items:flex-end;gap:2.5px;height:20px}
+  .eq i{width:2.5px;border-radius:2px;background:linear-gradient(var(--peach),var(--coral));height:20%;animation:eq 1s ease-in-out infinite alternate}
+  @keyframes eq{from{height:12%}to{height:96%}}
+
+  .reel-cap{text-align:center;font-family:var(--serif);font-style:italic;font-size:15px;color:var(--ink-soft);margin-top:26px}
+
+  .hero-cap{margin:38px auto 0;max-width:500px}
+  .hero-cap .row{display:flex;gap:12px}
+  .hero-cap input{flex:1;min-width:0;font-family:var(--sans);font-size:15.5px;padding:16px 20px;border-radius:999px;border:1.6px solid var(--peach);background:var(--card);color:var(--ink);box-shadow:0 10px 26px -12px rgba(27,37,64,.22)}
+  .hero-cap input::placeholder{color:#9aa2b8}
+  .hero-cap input:focus{outline:none;border-color:var(--indigo);box-shadow:0 0 0 3px rgba(38,52,95,.14)}
+  @media(max-width:520px){.hero-cap .row{flex-direction:column}.hero-cap .btn{width:100%}}
+
+  .proof{display:inline-flex;align-items:center;gap:13px;margin:24px auto 0;padding:9px 22px 9px 13px;background:var(--card);border:1px solid var(--line);border-radius:999px;box-shadow:0 16px 34px -20px rgba(27,37,64,.42);text-align:left}
+  .avatars{display:inline-flex;flex:none}
+  .avatars i{position:relative;overflow:hidden;width:30px;height:30px;border-radius:50%;border:2.5px solid var(--card);margin-left:-11px;display:block;box-shadow:0 2px 6px -1px rgba(27,37,64,.28)}
+  .avatars i:first-child{margin-left:0}
+  .avatars i img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .a1{background:linear-gradient(135deg,#ffd29a,#ee8a5a)}.a2{background:linear-gradient(135deg,#b9c6e6,#5a6fa6)}
+  .a3{background:linear-gradient(135deg,#f8c7c0,#e07d72)}.a4{background:linear-gradient(135deg,#c8e2c2,#5e9e6a)}
+  .proof-txt{display:flex;flex-direction:column;line-height:1.22}
+  .proof-lead{font-size:14.5px;color:var(--ink);font-weight:500}
+  .proof .count{font-weight:700;color:var(--coral-cta);font-size:16.5px;letter-spacing:-.01em}
+  .proof-sub{font-size:12px;color:var(--ink-soft);margin-top:2px}
+  .proof .muted{color:var(--ink-soft);opacity:.85}
+  .live{display:inline-block;vertical-align:middle;width:7px;height:7px;border-radius:50%;background:var(--coral-cta);margin-right:8px;flex:none;box-shadow:0 0 0 0 rgba(222,84,54,.55);animation:pulse 2.2s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(222,84,54,.5)}70%{box-shadow:0 0 0 8px rgba(222,84,54,0)}100%{box-shadow:0 0 0 0 rgba(222,84,54,0)}}
+  @media(max-width:560px){.proof{gap:11px;padding:8px 17px 8px 11px}.proof-lead{font-size:13.5px}.proof .count{font-size:15.5px}}
+
+  /* how it works */
+  .how-flow{display:flex;align-items:flex-start;justify-content:center;gap:0;margin-top:50px}
+  .how-step{flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:18px;max-width:300px}
+  .how-vis{position:relative;aspect-ratio:4/3;border-radius:18px;overflow:hidden;border:1px solid var(--line);box-shadow:0 26px 50px -30px rgba(27,37,64,.45)}
+  .how-txt{padding:0 2px}
+  .how-txt h3{font-family:var(--serif);font-size:21px;margin-bottom:5px}
+  .how-txt p{font-size:14.5px;color:var(--ink-soft)}
+  .how-arrow{flex:none;display:flex;align-items:center;justify-content:center;width:48px;color:var(--ink-soft);opacity:.4;align-self:flex-start;margin-top:13%}
+  .how-arrow svg{width:26px;height:26px}
+
+  /* step 1 — upload */
+  .hv-up{background:linear-gradient(160deg,#fff,var(--peach-soft))}
+  .hv-stack{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+  .hv-photo{position:relative;width:25%;aspect-ratio:4/5;border-radius:9px;overflow:hidden;background:linear-gradient(160deg,#ffd29a,#ee8a5a);box-shadow:0 12px 26px -12px rgba(27,37,64,.5);border:3px solid #fff}
+  .hv-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .hv-photo.p1{transform:rotate(-9deg) translateX(34%)}
+  .hv-photo.p2{transform:rotate(0deg);z-index:2}
+  .hv-photo.p3{transform:rotate(9deg) translateX(-34%)}
+  .hv-pill{position:absolute;left:50%;bottom:15px;transform:translateX(-50%);display:inline-flex;align-items:center;gap:7px;white-space:nowrap;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:7px 13px;font-size:12px;font-weight:600;color:var(--ink);box-shadow:0 10px 22px -12px rgba(27,37,64,.4)}
+  .hv-pill svg{color:var(--coral-cta);flex:none}
+
+  /* step 2 — craft */
+  .hv-craft{background:linear-gradient(160deg,#243660,#151d38)}
+  .hv-craft::after{content:"";position:absolute;inset:0;background:radial-gradient(60% 50% at 50% 42%,rgba(246,197,163,.28),transparent 70%)}
+  .hv-eq{position:absolute;left:50%;top:42%;transform:translate(-50%,-50%);display:flex;align-items:flex-end;gap:4px;height:48px;z-index:1}
+  .hv-eq i{width:4px;border-radius:3px;background:linear-gradient(var(--peach),var(--coral));height:30%;animation:eq 1s ease-in-out infinite alternate}
+  .hv-eq i:nth-child(odd){animation-delay:.16s}
+  .hv-eq i:nth-child(3n){animation-delay:.32s}
+  .hv-eq i:nth-child(3n+1){animation-delay:.08s}
+  .hv-craft .hv-pill{z-index:1;background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.25);color:#fff;backdrop-filter:blur(3px)}
+  .hv-craft .hv-pill svg{color:var(--peach)}
+
+  /* step 3 — watch */
+  .hv-watch{background:linear-gradient(165deg,#ffd29a,#ee8a5a 52%,#9c4a3a)}
+  .hv-film{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1}
+  .hv-watch::after{content:"";position:absolute;inset:0;z-index:2;background:radial-gradient(130% 80% at 50% 120%,rgba(0,0,0,.42),transparent 60%)}
+  .hv-play{position:absolute;z-index:3;left:50%;top:50%;transform:translate(-50%,-50%);width:50px;height:50px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.18);border:1.5px solid rgba(255,255,255,.65);backdrop-filter:blur(3px)}
+  .hv-play svg{margin-left:3px}
+  .hv-now{position:absolute;z-index:3;left:14px;bottom:13px;display:inline-flex;align-items:center;gap:7px;font-size:11.5px;color:rgba(255,255,255,.94);font-weight:500}
+  .hv-now .led{width:6px;height:6px;border-radius:50%;background:var(--coral);box-shadow:0 0 8px var(--coral);flex:none}
+
+  @media(max-width:760px){
+    .how-flow{flex-direction:column;align-items:center;gap:8px;max-width:340px;margin-left:auto;margin-right:auto}
+    .how-step{max-width:none;width:100%;flex:none}
+    .how-vis{aspect-ratio:16/9}
+    .how-arrow{width:100%;height:30px;margin:0;align-self:center;transform:rotate(90deg)}
+  }
+
+  @media(max-width:880px){
+    .snap.s1{width:92px;height:116px}.snap.s2{width:108px;height:135px}.snap.s3{width:122px;height:153px}
+    .snap.s2,.snap.s3{margin-left:-9px}
+    .player{width:min(420px,50vw);margin-left:-13px}
+  }
+  @media(max-width:760px){
+    .hero{padding:44px 0 48px}
+    .reel{flex-direction:column;gap:14px}
+    /* keep the photos as a compact horizontal fan, with the "ingredient"
+       badges overlapping their edges like the desktop version */
+    .snap{box-shadow:0 14px 28px -14px rgba(27,37,64,.42)}
+    .snaps{flex-direction:row;justify-content:center}
+    .snap.s1{width:88px;height:110px;margin-left:0;transform:rotate(-3deg)}
+    .snap.s2{width:100px;height:125px;margin-left:-18px;transform:rotate(1.2deg)}
+    .snap.s3{width:112px;height:140px;margin-left:-18px;transform:rotate(3deg)}
+    .ingredients{position:absolute;inset:0;display:block;width:auto;margin:0}
+    .ingredient{position:absolute;box-shadow:0 8px 18px -10px rgba(27,37,64,.4)}
+    .ing-audio{top:-10px;left:-6px;right:auto;bottom:auto;transform:rotate(-4deg)}
+    .ing-sound{top:-14px;right:-2px;left:auto;bottom:auto;transform:rotate(4deg)}
+    .ing-voice{top:auto;bottom:30%;left:-10px;right:auto;transform:rotate(-6deg)}
+    .ing-clip-a{top:auto;bottom:-12px;left:50%;right:auto;transform:translateX(-72%) rotate(4deg)}
+    .ing-clip-b{top:auto;bottom:-6px;right:-4px;left:auto;transform:rotate(-3deg)}
+    .becomes{display:block;color:var(--ink-soft);opacity:.5;font-size:20px;line-height:1;margin:2px 0}
+    .player{width:100%;margin-left:0}
+  }
+
+  /* sections */
+  .sec{padding:88px 0}
+  .sec-head{max-width:36ch}
+  .sec-head.mid{margin:0 auto;text-align:center}
+  .sec-head h2{font-size:clamp(28px,3.6vw,44px);margin:14px 0 0}
+  .sec-head p{margin-top:14px;font-size:17px}
+  .sec-head.mid p{margin-left:auto;margin-right:auto;max-width:48ch}
+
+  .themes{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:46px}
+  .theme{border-radius:var(--r);overflow:hidden;border:1px solid var(--line);background:var(--card);transition:transform .2s ease,box-shadow .2s ease}
+  .theme:hover{transform:translateY(-4px);box-shadow:0 20px 40px -20px rgba(27,37,64,.32)}
+  .theme .swatch{aspect-ratio:4/3;position:relative;overflow:hidden}
+  /* the clip is the resting layer (plays while on screen); the mood gradient
+     is the fallback underneath + a soft-light grade on top, so each theme reads
+     as a distinct cinematic "look" that matches the rest of the page. */
+  .theme .swatch > img,.theme .swatch > video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;transition:transform .6s ease}
+  .theme:hover .swatch > img,.theme:hover .swatch > video{transform:scale(1.05)}
+  .theme .swatch::before{content:"";position:absolute;inset:0;z-index:2;mix-blend-mode:soft-light;opacity:.5;pointer-events:none}
+  .theme .swatch::after{content:"";position:absolute;inset:0;z-index:3;background:linear-gradient(180deg,transparent 40%,rgba(0,0,0,.5))}
+  .theme .t-tag{position:absolute;z-index:4;left:13px;bottom:12px;display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:rgba(255,255,255,.92)}
+  .theme .t-tag .eq{height:13px;gap:2px}
+  .theme .t-tag .eq i{width:2px}
+  .ta{background:linear-gradient(150deg,#ffd29a,#ee8a5a 60%,#9c4a3a)}.tb{background:linear-gradient(150deg,#9fb0db,#4f5fa0 58%,#1e2747)}
+  .tc{background:linear-gradient(150deg,#f8d3cc,#e08c82 55%,#8a4a52)}.td{background:linear-gradient(150deg,#bfe0b8,#54915f 55%,#27513a)}
+  .swatch.ta::before{background:linear-gradient(150deg,#ffd29a,#ee8a5a 60%,#9c4a3a)}
+  .swatch.tb::before{background:linear-gradient(150deg,#9fb0db,#4f5fa0 58%,#1e2747)}
+  .swatch.tc::before{background:linear-gradient(150deg,#f8d3cc,#e08c82 55%,#8a4a52)}
+  .swatch.td::before{background:linear-gradient(150deg,#bfe0b8,#54915f 55%,#27513a)}
+  .theme .lbl{padding:16px 18px 20px}
+  .theme .lbl h3{font-size:18px;margin-bottom:4px}
+  .theme .lbl p{font-size:13.5px}
+  @media(max-width:880px){.themes{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:540px){.themes{grid-template-columns:1fr;gap:14px}}
+
+  .band{background:var(--indigo-deep);color:#EFE7DC;position:relative;overflow:hidden}
+  .band::before{content:"";position:absolute;width:620px;height:620px;right:-120px;top:-160px;border-radius:50%;background:radial-gradient(circle, rgba(238,108,77,.22), rgba(246,197,163,.08) 45%, transparent 68%)}
+  .band .wrap{position:relative;padding:100px 24px}
+  .band .eyebrow{color:var(--peach)}
+  .band h2{color:#FBF3E8;font-size:clamp(30px,4.2vw,50px);margin:16px 0 0;max-width:15ch}
+  .band h2 em{color:var(--peach)}
+  .band p{color:rgba(239,231,220,.82);font-size:18px;margin-top:22px;max-width:42ch}
+  .band-points{display:flex;flex-wrap:wrap;gap:14px 34px;margin-top:34px}
+  .band-points span{display:flex;align-items:center;gap:11px;font-size:15px;color:rgba(239,231,220,.94)}
+  .band-points .tick{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:rgba(238,108,77,.2);color:var(--peach);flex:none}
+
+  .price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:50px;align-items:stretch}
+  .tier{display:flex;flex-direction:column;border-radius:var(--r);background:var(--card);border:1px solid var(--line);padding:34px 28px;position:relative}
+  .tier.feat{border:1.5px solid var(--coral);box-shadow:0 24px 48px -26px rgba(222,84,54,.4)}
+  .tier .pill{position:absolute;top:-13px;left:28px;background:var(--coral-cta);color:#fff;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:6px 12px;border-radius:999px}
+  .tier .pill.alt{background:var(--indigo)}
+  .tier h3{font-family:var(--serif);font-size:24px;margin-bottom:4px}
+  .tier .blurb{font-size:14px;color:var(--ink-soft);min-height:40px}
+  .tier .amt{font-family:var(--serif);font-size:44px;font-weight:600;color:var(--ink);margin:16px 0 2px;letter-spacing:-.02em}
+  .tier .amt small{font-family:var(--sans);font-size:15px;font-weight:500;color:var(--ink-soft)}
+  .tier .amt .was{font-family:var(--sans);font-size:19px;font-weight:500;color:var(--ink-soft);text-decoration:line-through;margin-right:9px;letter-spacing:0}
+  .tier .off{display:inline-block;margin-left:9px;background:#D7263D;color:#fff;font-family:var(--sans);font-size:12px;font-weight:700;letter-spacing:.02em;padding:3px 9px;border-radius:999px;vertical-align:middle}
+  .tier .save{font-size:12.5px;color:var(--coral-cta);font-weight:600;margin:0}
+  .tier .incl{font-size:12.5px;font-weight:700;color:var(--ink);margin:18px 0 0}
+  .tier ul{list-style:none;margin:12px 0 26px;display:flex;flex-direction:column;gap:11px}
+  .tier li{font-size:14.5px;color:var(--ink);display:flex;gap:10px;align-items:flex-start}
+  .tier li svg{flex:none;margin-top:3px;color:var(--coral-cta)}
+  .tier .btn{margin-top:auto;width:100%}
+  .price-note{text-align:center;font-size:13px;color:var(--ink-soft);margin-top:22px;font-style:italic}
+  @media(max-width:880px){.price-grid{grid-template-columns:1fr}}
+
+  /* post-signup willingness-to-pay micro-survey */
+  .wtp{margin-top:18px;border-top:1px solid var(--line);padding-top:16px}
+  .wtp > p{font-size:13.5px;color:var(--ink-soft);margin:0 0 11px}
+  .wtp-chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+  .wtp-chip{font-family:var(--sans);font-size:14px;font-weight:600;color:var(--ink);background:var(--card);border:1.5px solid var(--line);border-radius:999px;padding:9px 16px;cursor:pointer;transition:border-color .15s ease,background .15s ease,transform .12s ease}
+  .wtp-chip:hover{border-color:var(--coral);background:rgba(238,108,77,.07);transform:translateY(-1px)}
+  .wtp-done{font-size:14px;color:var(--coral-cta);font-weight:600;display:flex;align-items:center;justify-content:center;gap:7px;margin:2px 0 0}
+
+  .gift{display:flex;align-items:center;gap:20px;margin:30px 0 0;padding:22px 26px;border-radius:var(--r);background:linear-gradient(120deg,var(--peach-soft),rgba(251,230,214,.4));border:1px solid var(--peach)}
+  .gift-ic{width:48px;height:48px;border-radius:14px;background:#fff;color:var(--indigo);display:grid;place-items:center;flex:none;box-shadow:0 8px 18px -8px rgba(38,52,95,.5)}
+  .gift-txt{flex:1;min-width:0}
+  .gift-txt h3{font-family:var(--serif);font-size:21px;margin-bottom:3px}
+  .gift-txt p{font-size:14px;color:var(--ink-soft)}
+  .gift .btn{flex:none}
+  @media(max-width:620px){.gift{flex-direction:column;text-align:center}.gift .btn{width:100%}}
+
+  .faq{max-width:780px;margin:46px auto 0}
+  details{border-bottom:1px solid var(--line);padding:6px 0}
+  summary{list-style:none;cursor:pointer;padding:18px 4px;font-family:var(--serif);font-size:19px;font-weight:500;display:flex;justify-content:space-between;align-items:center;gap:16px}
+  summary::-webkit-details-marker{display:none}
+  summary .x{flex:none;transition:transform .2s ease;color:var(--coral);font-size:22px;line-height:1}
+  details[open] summary .x{transform:rotate(45deg)}
+  details p{padding:0 4px 20px;font-size:15.5px;color:var(--ink-soft)}
+
+  .final{text-align:center;padding:98px 0}
+  .final h2{font-size:clamp(30px,4.6vw,54px);max-width:15ch;margin:14px auto 0}
+  .final .hero-cap{margin-top:30px}
+  .final .row{justify-content:center}
+  .final .micro{font-size:13px;color:var(--ink-soft);margin-top:13px;display:flex;align-items:center;justify-content:center;gap:7px}
+
+  footer{border-top:1px solid var(--line);padding:40px 0}
+  .foot-in{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+  .foot-in .brand{font-size:21px}
+  .foot-links{display:flex;gap:24px;font-size:14px;color:var(--ink-soft)}
+  .foot-links a:hover{color:var(--ink)}
+  .copy{font-size:13px;color:var(--ink-soft)}
+
+  @media(max-width:920px){.sec{padding:64px 0}.band .wrap{padding:80px 24px}}
+  @media(max-width:600px){
+    .wrap{padding:0 20px}
+    .sec{padding:52px 0}
+    .band .wrap{padding:60px 20px}
+    .final{padding:64px 0}
+    .reel-cap{font-size:14px;margin-top:20px}
+    .hero-cap{margin-top:30px}
+    .band-points{gap:12px 24px}
+    .tier{padding:28px 22px}
+    .faq{margin-top:34px}
+    summary{font-size:17px;padding:16px 2px}
+    details p{font-size:14.5px}
+  }
+  @media(max-width:400px){
+    .wrap{padding:0 16px}
+    .nav-in{height:62px}
+    .brand{font-size:21px}
+    .nav-cta{padding:9px 15px;font-size:13.5px}
+    .modal{padding:30px 22px}
+    .modal h3{font-size:24px}
+  }
+
+  .overlay{position:fixed;inset:0;z-index:1000;background:rgba(21,29,56,.55);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;padding:24px}
+  .overlay.on{display:flex}
+  .modal{background:var(--paper);border-radius:24px;max-width:440px;width:100%;padding:38px 34px;position:relative;box-shadow:0 40px 90px -30px rgba(0,0,0,.5);animation:pop .25s ease}
+  @keyframes pop{from{transform:translateY(14px) scale(.98);opacity:0}to{transform:none;opacity:1}}
+  .modal .close{position:absolute;top:16px;right:18px;border:0;background:none;cursor:pointer;font-size:26px;color:var(--ink-soft);line-height:1}
+  .modal .eyebrow{margin-bottom:10px}
+  .modal h3{font-family:var(--serif);font-size:27px;margin-bottom:8px}
+  .modal p{font-size:15px;margin-bottom:22px}
+  .modal-bonus{display:flex;align-items:flex-start;gap:11px;margin:0 0 18px;padding:13px 15px;border-radius:14px;background:linear-gradient(120deg,var(--peach-soft),rgba(251,230,214,.45));border:1px solid var(--peach)}
+  .modal-bonus .mb-ic{flex:none;width:30px;height:30px;border-radius:9px;background:#fff;color:var(--indigo);display:grid;place-items:center;box-shadow:0 5px 12px -6px rgba(38,52,95,.5)}
+  .modal-bonus p{margin:0;font-size:13.5px;line-height:1.45;color:var(--ink)}
+  .modal input{width:100%;font-family:var(--sans);font-size:15px;padding:14px 16px;border-radius:14px;border:1.5px solid var(--line);background:var(--card);margin-bottom:12px}
+  .modal input:focus{outline:none;border-color:var(--indigo);box-shadow:0 0 0 3px rgba(38,52,95,.12)}
+  .modal .btn{width:100%}
+  .ok{text-align:center;padding:8px 0}
+  .ok .check{width:62px;height:62px;border-radius:50%;margin:0 auto 18px;display:grid;place-items:center;background:rgba(238,108,77,.14);color:var(--coral-cta)}
+  .ok h3{margin-bottom:8px}
+
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}.scene .frame:nth-child(1){opacity:1}}
+</style>
+
+<!-- ===== ANALYTICS =====
+     PostHog: autocaptures every click + scroll/pageleave; ingests our custom events.
+     Paste your Project API key below (Project Settings → API keys). Until then it's a
+     harmless no-op. Turn on Heatmaps / Session Replay from the PostHog dashboard. -->
+<script>
+  !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey getNextSurveyStep identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty createPersonProfile opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing debug getPageViewId captureTraceFeedback captureTraceMetric".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+  var POSTHOG_KEY="phc_REPLACE_WITH_YOUR_PROJECT_KEY";
+  if(POSTHOG_KEY.indexOf("REPLACE")===-1){ posthog.init(POSTHOG_KEY,{api_host:"https://us.i.posthog.com",autocapture:true,capture_pageview:true,capture_pageleave:true}); }
+</script>
+
+<!-- Vercel Web Analytics (enable it under Project → Analytics; the script 404s until then). -->
+<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments);};</script>
+<script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+
+<nav>
+  <div class="wrap nav-in">
+    <div class="brand"><span class="mark"></span>Trip2Movie</div>
+    <div class="nav-links">
+      <a class="lnk" href="#how">How it works</a>
+      <a class="lnk" href="#themes">Themes</a>
+      <a class="lnk" href="#pricing">Pricing</a>
+      <a class="lnk" href="#gift">Gift</a>
+      <a class="lnk" href="#faq">FAQ</a>
+      <button class="btn nav-cta" data-open="nav">Claim your spot</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap">
+    <h1>Your photos are silent. <em>Your trip wasn&rsquo;t.</em></h1>
+
+    <!-- SIGNATURE: scattered photos resolve into one film -->
+    <div class="stage">
+      <div class="reel" role="img" aria-label="Your trip photos and clips coming together into one cinematic film, playing with sound">
+        <!-- The fanned photos + the other "ingredients" (audio note, clip) that feed the film. Save real files as assets/snap-1.jpg ... snap-3.jpg (4:5). -->
+        <div class="snaps">
+          <div class="ingredients" aria-hidden="true">
+            <span class="ingredient ing-audio"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="2" width="6" height="11" rx="3"/><path d="M5 10a7 7 0 0 0 14 0"/><line x1="12" y1="19" x2="12" y2="22"/></svg><span class="ewave"><i></i><i></i><i></i><i></i><i></i></span><span class="ing-dur">0:14</span></span>
+            <span class="ingredient ing-voice"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.5 8.5 0 0 1-11.5 7.9L3 21l1.6-6.5A8.5 8.5 0 1 1 21 11.5z"/></svg><span>Voice note</span><span class="ing-dur">0:22</span></span>
+            <span class="ingredient ing-sound"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg><span>Sound</span><span class="ing-dur">0:30</span></span>
+            <span class="ingredient ing-clip-a"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M4 3l16 9-16 9z"/></svg>Clip &middot; 0:08</span>
+            <span class="ingredient ing-clip-b"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M4 3l16 9-16 9z"/></svg>Clip &middot; 0:15</span>
+          </div>
+          <div class="snap s1"><span class="pic p1"></span><img class="pic" src="assets/snap-1.jpg" alt="" onerror="this.remove()"></div>
+          <div class="snap s2"><span class="pic p2"></span><img class="pic" src="assets/snap-2.jpg" alt="" onerror="this.remove()"></div>
+          <div class="snap s3"><span class="pic p3"></span><img class="pic" src="assets/snap-3.jpg" alt="" onerror="this.remove()"></div>
+        </div>
+        <span class="becomes" aria-hidden="true">&darr;</span>
+        <div class="player">
+          <!-- The film cross-fades through these short clips. Save assets/movie-1..4.mp4 (16:9, muted). A missing clip falls back to its gradient. -->
+          <div class="scene">
+            <div class="frame"><span class="ph f1"></span><video class="real" src="assets/movie-1.mp4" muted loop autoplay playsinline preload="auto" onerror="this.remove()"></video></div>
+            <div class="frame"><span class="ph f2"></span><video class="real" src="assets/movie-2.mp4" muted loop autoplay playsinline preload="auto" onerror="this.remove()"></video></div>
+            <div class="frame"><span class="ph f3"></span><video class="real" src="assets/movie-3.mp4" muted loop autoplay playsinline preload="auto" onerror="this.remove()"></video></div>
+            <div class="frame"><span class="ph f4"></span><video class="real" src="assets/movie-4.mp4" muted loop autoplay playsinline preload="auto" onerror="this.remove()"></video></div>
+          </div>
+          <div class="glow"></div><div class="vig"></div>
+          <div class="nowtag" aria-hidden="true"><span class="led"></span><span>Now playing &middot; <span id="nowCap">the waves on the first morning</span></span></div>
+          <div class="play" aria-hidden="true"><svg width="18" height="22" viewBox="0 0 22 26" fill="#fff"><path d="M0 0l22 13L0 26z"/></svg></div>
+          <div class="sound" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7" fill="none" stroke="currentColor" stroke-width="2"/></svg><span class="eq" id="eq"></span></div>
+        </div>
+      </div>
+      <p class="reel-cap">Your scattered photos and clips &mdash; stitched into one film, with the sound back on.</p>
+    </div>
+
+    <form class="hero-cap capture" data-source="hero">
+      <div class="row">
+        <input type="email" required placeholder="you@email.com" aria-label="Email address" />
+        <button class="btn" type="submit">Claim your early spot</button>
+      </div>
+    </form>
+    <div class="proof">
+      <span class="avatars"><i class="a1"><img src="assets/avatars/1.jpg" alt="" onerror="this.remove()"></i><i class="a2"><img src="assets/avatars/2.jpg" alt="" onerror="this.remove()"></i><i class="a3"><img src="assets/avatars/3.jpg" alt="" onerror="this.remove()"></i><i class="a4"><img src="assets/avatars/4.jpg" alt="" onerror="this.remove()"></i></span>
+      <span class="proof-txt">
+        <span class="proof-lead"><span class="live" aria-hidden="true"></span><strong id="proofCount" class="count">3,120</strong> families on the waitlist</span>
+        <span class="proof-sub">New invites every week &middot; <span class="muted">Private &amp; free to try</span></span>
+      </span>
+    </div>
+
+    <p class="sub">Trip2Movie turns your photos and clips into a short cinematic film. Your own footage brings the sound back, an original score ties it together, and one tap puts you right back there &mdash; with the people you love.</p>
+  </div>
+</header>
+
+<!-- HOW IT WORKS -->
+<section class="sec how" id="how">
+  <div class="wrap">
+    <div class="sec-head mid">
+      <span class="eyebrow dim">How it works</span>
+      <h2>From camera roll to cinema, in three steps.</h2>
+      <p>No editing skills, no timeline to wrangle. Bring the moments &mdash; we do the rest.</p>
+    </div>
+    <div class="how-flow">
+      <div class="how-step" data-step="upload">
+        <div class="how-vis hv-up">
+          <div class="hv-stack" aria-hidden="true">
+            <span class="hv-photo p1"><img src="assets/snap-1.jpg" alt="" onerror="this.remove()"></span>
+            <span class="hv-photo p2"><img src="assets/snap-2.jpg" alt="" onerror="this.remove()"></span>
+            <span class="hv-photo p3"><img src="assets/snap-3.jpg" alt="" onerror="this.remove()"></span>
+          </div>
+          <span class="hv-pill"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 16V4m0 0L8 8m4-4l4 4"/><path d="M4 16v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>Adding 24 photos &middot; 3 clips</span>
+        </div>
+        <div class="how-txt"><h3>Bring your moments</h3><p>Drop in photos and clips straight from your phone &mdash; even the messy, out-of-order ones.</p></div>
+      </div>
+
+      <div class="how-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></div>
+
+      <div class="how-step" data-step="craft">
+        <div class="how-vis hv-craft">
+          <span class="hv-eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+          <span class="hv-pill"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.2 5.8L20 10l-5.8 2.2L12 18l-2.2-5.8L4 10l5.8-2.2z"/></svg>Scoring your film&hellip;</span>
+        </div>
+        <div class="how-txt"><h3>We edit &amp; score it</h3><p>Pick a look and we cut, pace and score it &mdash; your clips&rsquo; real sound, under an original track.</p></div>
+      </div>
+
+      <div class="how-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></div>
+
+      <div class="how-step" data-step="watch">
+        <div class="how-vis hv-watch">
+          <video class="hv-film" src="assets/movie-2.mp4" muted loop playsinline preload="none" onerror="this.remove()"></video>
+          <span class="hv-play" aria-hidden="true"><svg width="15" height="18" viewBox="0 0 22 26" fill="#fff"><path d="M0 0l22 13L0 26z"/></svg></span>
+          <span class="hv-now" aria-hidden="true"><span class="led"></span>Now playing &middot; your trip</span>
+        </div>
+        <div class="how-txt"><h3>Press play, together</h3><p>Minutes later your film is ready &mdash; watch it, share it in a tap, and keep it forever in HD.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THEMES -->
+<section class="sec" id="themes">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow dim">A look for every kind of trip</span>
+      <h2>One set of memories. Many ways to feel them.</h2>
+    </div>
+    <!-- Each theme is a living mini-film: the clip plays while it's on screen (no hover
+         needed, so it works on touch too), graded by the theme's mood gradient — which is
+         also the fallback if a clip is missing. Swap src to per-theme assets/theme-1..4.mp4
+         for production. -->
+    <div class="themes">
+      <div class="theme" data-theme="Golden Hour"><div class="swatch ta">
+        <video src="assets/movie-1.mp4" muted loop playsinline preload="none" onerror="this.remove()"></video>
+        <span class="t-tag"><span class="eq"><i></i><i></i><i></i><i></i></span>Golden Hour</span>
+      </div><div class="lbl"><h3>Golden Hour</h3><p>Warm, slow and tender. For the trips you want to linger in.</p></div></div>
+      <div class="theme" data-theme="Grand Adventure"><div class="swatch tb">
+        <video src="assets/movie-2.mp4" muted loop playsinline preload="none" onerror="this.remove()"></video>
+        <span class="t-tag"><span class="eq"><i></i><i></i><i></i><i></i></span>Grand Adventure</span>
+      </div><div class="lbl"><h3>Grand Adventure</h3><p>Sweeping and cinematic. Big landscapes, bigger feeling.</p></div></div>
+      <div class="theme" data-theme="Little Moments"><div class="swatch tc">
+        <video src="assets/movie-3.mp4" muted loop playsinline preload="none" onerror="this.remove()"></video>
+        <span class="t-tag"><span class="eq"><i></i><i></i><i></i><i></i></span>Little Moments</span>
+      </div><div class="lbl"><h3>Little Moments</h3><p>Intimate and family-first. The small stuff, made the main event.</p></div></div>
+      <div class="theme" data-theme="Wanderlust"><div class="swatch td">
+        <video src="assets/movie-4.mp4" muted loop playsinline preload="none" onerror="this.remove()"></video>
+        <span class="t-tag"><span class="eq"><i></i><i></i><i></i><i></i></span>Wanderlust</span>
+      </div><div class="lbl"><h3>Wanderlust</h3><p>Bright and wide-eyed. The thrill of somewhere new.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- DUSK BAND -->
+<section class="band">
+  <div class="wrap">
+    <span class="eyebrow">For the people who were there — and the ones who weren't</span>
+    <h2>Some trips deserve a <em>screening</em>, not a scroll.</h2>
+    <p>Photos sit silent in a camera roll no one ever opens. A film gets watched — the laughter comes back, the music swells, and for ninety seconds you&rsquo;re all there again. On a Sunday with the kids. Sent to grandparents who couldn&rsquo;t come. Replayed years from now, when the trip is a memory worth keeping.</p>
+    <div class="band-points">
+      <span><span class="tick"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>Watch together on any screen</span>
+      <span><span class="tick"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>Send as a gift in one tap</span>
+      <span><span class="tick"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>Keep it forever, in HD</span>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="sec" id="pricing">
+  <div class="wrap">
+    <div class="sec-head mid">
+      <span class="eyebrow dim">Simple pricing</span>
+      <h2>Start free. Pay only to keep it.</h2>
+      <p>Make your first film and watch the whole thing &mdash; sound and all &mdash; before you spend a cent.</p>
+    </div>
+    <div class="price-grid">
+      <div class="tier">
+        <h3>Free preview</h3>
+        <p class="blurb">See the magic on your own trip. No card needed.</p>
+        <div class="amt">Free</div>
+        <ul>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>Upload your trip &amp; pick any theme</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>Watch the full film with sound</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>Watermarked, plays in the browser</li>
+        </ul>
+        <button class="btn ghost" data-open="tier" data-tier="free" data-price="0">Start free</button>
+      </div>
+      <div class="tier">
+        <h3>Standard</h3>
+        <p class="blurb">Your film in crisp 1080p &mdash; yours to keep.</p>
+        <div class="amt"><span class="was">$89</span>$19.99 <small>/ film</small><span class="off">&minus;78%</span></div>
+        <p class="incl">Everything in Preview, plus:</p>
+        <ul>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>Full film in 1080p HD</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>No watermark &mdash; download, share, keep forever</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>Your clips&rsquo; real audio + an original score</li>
+        </ul>
+        <button class="btn" data-open="tier" data-tier="standard" data-price="19.99">Reserve in 1080p</button>
+      </div>
+      <div class="tier feat">
+        <span class="pill">Most chosen</span>
+        <h3>Cinema 4K</h3>
+        <p class="blurb">The big-screen edition, ready in minutes.</p>
+        <div class="amt"><span class="was">$199</span>$59 <small>/ film</small><span class="off">&minus;70%</span></div>
+        <p class="incl">Everything in Standard, plus:</p>
+        <ul>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>Stunning 4K Ultra HD</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>Priority rendering &mdash; ready in minutes</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>Crisp on the biggest screen in the house</li>
+        </ul>
+        <button class="btn" data-open="tier" data-tier="cinema" data-price="59">Reserve in 4K</button>
+      </div>
+    </div>
+    <div class="gift" id="gift">
+      <span class="gift-ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg></span>
+      <div class="gift-txt">
+        <h3>Or give one as a gift.</h3>
+        <p>Reserve with <strong>your own</strong> email &mdash; we&rsquo;ll send you a gift link to pass on whenever you&rsquo;re ready. No need for their details now.</p>
+      </div>
+      <button class="btn ind" data-open="tier" data-tier="gift" data-price="19.99">Get a gift link</button>
+    </div>
+    <p class="price-note">Early-adopter pricing &mdash; up to 78% off launch prices, plus a free Cinema 4K film on your first order. Locked in for you, even after we launch.</p>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="sec" id="faq" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head mid">
+      <span class="eyebrow dim">Good to know</span>
+      <h2>Questions, answered.</h2>
+    </div>
+    <div class="faq">
+      <details open>
+        <summary>Where do my photos go? Are they private? <span class="x">+</span></summary>
+        <p>Your memories are yours. Uploads are private to your account, never sold, and never used to train anything. You can delete them — and your films — whenever you want.</p>
+      </details>
+      <details>
+        <summary>Does the film have sound and music? <span class="x">+</span></summary>
+        <p>Yes — it&rsquo;s the heart of it. Your video clips keep their original audio, so the laughter and the waves come back, and we lay an original score underneath. You can swap the music to fit the mood.</p>
+      </details>
+      <details>
+        <summary>What do I need to upload? <span class="x">+</span></summary>
+        <p>Whatever you have. Phone photos and short clips are ideal. There&rsquo;s no minimum — though the more moments you add, the richer the film. We handle the ordering, pacing and music.</p>
+      </details>
+      <details>
+        <summary>How long is the finished film? <span class="x">+</span></summary>
+        <p>Most films land around one to three minutes — short enough to actually watch, long enough to feel like the trip. Paid plans unlock longer cuts.</p>
+      </details>
+      <details>
+        <summary>When can I actually use it? <span class="x">+</span></summary>
+        <p>We&rsquo;re rolling out invites from the private beta in small groups each week. Join the list and we&rsquo;ll email you the moment your spot opens.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final">
+  <div class="wrap">
+    <span class="eyebrow">Invites go out in small batches each week</span>
+    <h2>Be the first to hear your trip again.</h2>
+    <form class="hero-cap capture" data-source="footer">
+      <div class="row">
+        <input type="email" required placeholder="you@email.com" aria-label="Email address" />
+        <button class="btn" type="submit">Claim your early spot</button>
+      </div>
+      <p class="micro">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        Private beta. No spam — just your invite when it&rsquo;s ready.
+      </p>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-in">
+    <div class="brand"><span class="mark"></span>Trip2Movie</div>
+    <div class="foot-links">
+      <a href="#how">How it works</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#" data-open="footerlink">Privacy</a>
+      <a href="#" data-open="footerlink">Contact</a>
+    </div>
+    <div class="copy">© 2026 Trip2Movie. Relive it — sound and all.</div>
+  </div>
+</footer>
+
+<div class="overlay" id="overlay" aria-hidden="true">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+    <button class="close" aria-label="Close">&times;</button>
+    <div id="mForm">
+      <span class="eyebrow" id="mEyebrow">Private beta</span>
+      <h3 id="mTitle">Claim your spot</h3>
+      <p id="mCopy">Pop in your email and we&rsquo;ll send your invite the moment a spot opens.</p>
+      <div class="modal-bonus">
+        <span class="mb-ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg></span>
+        <p><strong>Early-adopter bonus:</strong> we&rsquo;ll add a <strong>free Cinema 4K film</strong> (<span id="mbValue">$59</span> value) to your order &mdash; whatever you choose today.</p>
+      </div>
+      <input type="email" id="mEmail" required placeholder="you@email.com" aria-label="Email address" />
+      <button class="btn" id="mSubmit">Reserve my spot</button>
+    </div>
+    <div class="ok" id="mOk" style="display:none">
+      <div class="check"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></div>
+      <h3>You&rsquo;re on the list.</h3>
+      <p>We onboard a small group each week — watch your inbox for your invite.</p>
+      <div class="wtp" id="mWtp" data-source="modal"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  /* ====== CONFIG — SET TO REAL NUMBER (bind to your real waitlist count) ====== */
+  var WAITLIST = 3120; // fallback only; the real number comes from /api/waitlist (DB-backed)
+  function setWaitlist(n){ var pc=document.getElementById("proofCount"); if(pc && typeof n==="number") pc.textContent = n.toLocaleString(); }
+  setWaitlist(WAITLIST);
+  fetch("/api/waitlist").then(function(r){return r.json();}).then(function(d){ if(d && typeof d.count==="number"){ WAITLIST=d.count; setWaitlist(d.count); } }).catch(function(){});
+  var lastEmail = null;
+
+  /* ====== ANALYTICS — custom events fan out to PostHog + Vercel + our DB ====== */
+  var DB_EVENTS = { pricing_cta_click:1, wtp_response:1, cta_click:1, nav_click:1, theme_click:1, how_step_click:1 };
+  function track(event, props){
+    props = props || {};
+    try{ if(window.posthog && posthog.capture) posthog.capture(event, props); }catch(e){}
+    try{ if(window.va) window.va("event", Object.assign({name:event}, props)); }catch(e){}
+    if(DB_EVENTS[event]){
+      try{ fetch("/api/event", {method:"POST", headers:{"Content-Type":"application/json"}, keepalive:true, body:JSON.stringify(Object.assign({name:event, email:lastEmail}, props))}); }catch(e){}
+    }
+    console.log("[track]", event, props);
+  }
+
+  /* ====== EARLY-ADOPTER PRICING ========================================
+     PRICE_OLD = the struck "was" anchor. PRICE_VARIANTS = the discounted
+     price actually charged. A/B/C variance is currently PAUSED (all buckets
+     equal) so the offer is consistent everywhere; give the buckets different
+     numbers to re-enable the willingness-to-pay test. The bucket still rides
+     along on every event for analytics. */
+  var PRICE_OLD = { standard:89, cinema:199 };
+  var PRICE_VARIANTS = {
+    A:{standard:19.99,cinema:59},
+    B:{standard:19.99,cinema:59},
+    C:{standard:19.99,cinema:59}
+  };
+  var PRICE_VARIANT = (function(){
+    try{ var s=localStorage.getItem("rv_price_variant"); if(s && PRICE_VARIANTS[s]) return s; }catch(e){}
+    var keys=Object.keys(PRICE_VARIANTS), v=keys[Math.floor(Math.random()*keys.length)];
+    try{ localStorage.setItem("rv_price_variant", v); }catch(e){}
+    return v;
+  })();
+  var PRICES = PRICE_VARIANTS[PRICE_VARIANT];
+  function fmt(n){ return "$" + (Number.isInteger(n) ? n : n.toFixed(2)); }
+  function amtHTML(oldP, newP){
+    var off = Math.round((1 - newP/oldP) * 100);
+    return '<span class="was">'+fmt(oldP)+'</span>'+fmt(newP)+' <small>/ film</small><span class="off">−'+off+'%</span>';
+  }
+  (function(){
+    var s=document.querySelector('.price-grid [data-tier="standard"]');
+    var c=document.querySelector('.price-grid [data-tier="cinema"]');
+    var g=document.querySelector('[data-tier="gift"]');
+    if(s){ s.setAttribute("data-price",PRICES.standard); var st=s.closest(".tier"), sa=st&&st.querySelector(".amt"); if(sa) sa.innerHTML=amtHTML(PRICE_OLD.standard, PRICES.standard); }
+    if(c){ c.setAttribute("data-price",PRICES.cinema); var ct=c.closest(".tier"), ca=ct&&ct.querySelector(".amt"); if(ca) ca.innerHTML=amtHTML(PRICE_OLD.cinema, PRICES.cinema); }
+    if(g){ g.setAttribute("data-price",PRICES.standard); }
+    var mb=document.getElementById("mbValue"); if(mb) mb.textContent=fmt(PRICES.cinema);
+  })();
+
+  track("page_view", {page:"landing", price_variant:PRICE_VARIANT, standard_price:PRICES.standard, cinema_price:PRICES.cinema});
+
+  /* ====== EMAIL CAPTURE — POST to the Vercel function + tie email to the PostHog profile ====== */
+  async function submitEmail(email, props){
+    props = props || {};
+    lastEmail = email;
+    try{ if(window.posthog && posthog.identify) posthog.identify(email, {email:email}); }catch(e){}
+    track("lead_captured", Object.assign({email_domain:(email.split("@")[1]||"")}, props));
+    try{
+      var res = await fetch("/api/subscribe", {
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify(Object.assign({email:email}, props))
+      });
+      var data = await res.json();
+      if(data && typeof data.count==="number"){ WAITLIST=data.count; setWaitlist(data.count); }
+    }catch(e){ /* best-effort: analytics already has the lead, never block the UI */ }
+  }
+  function isEmail(v){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);}
+
+  /* ====== willingness-to-pay micro-survey (shown after any signup) ====== */
+  function wtpInner(){
+    var chips=[0,10,20,35,50].map(function(a){
+      return '<button class="wtp-chip" data-amount="'+a+'">$'+(a===50?"50+":a)+'</button>';
+    }).join("");
+    return '<p>One quick thing — what feels fair to pay for your finished film?</p><div class="wtp-chips">'+chips+'</div>';
+  }
+  function wtpBlock(source){ return '<div class="wtp" data-source="'+(source||"form")+'">'+wtpInner()+'</div>'; }
+  document.addEventListener("click", function(e){
+    var chip=e.target.closest && e.target.closest(".wtp-chip");
+    if(!chip) return;
+    var wrap=chip.closest(".wtp");
+    track("wtp_response", {amount:Number(chip.getAttribute("data-amount")), source:(wrap&&wrap.getAttribute("data-source"))||"unknown", price_variant:PRICE_VARIANT});
+    if(wrap){
+      wrap.innerHTML='<p class="wtp-done"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg> Thanks — that helps us a lot.</p>';
+      // In the modal, the WTP pick is the final step — auto-close once everything's done.
+      if(wrap.id==="mWtp"){ setTimeout(function(){ if(typeof closeModal==="function") closeModal(); }, 3000); }
+    }
+  });
+
+  document.querySelectorAll("form.capture").forEach(function(f){
+    f.addEventListener("submit", async function(e){
+      e.preventDefault();
+      var input=f.querySelector("input"), email=input.value.trim(), source=f.getAttribute("data-source");
+      if(!isEmail(email)){ input.focus(); input.style.borderColor="#c0392b"; return; }
+      var btn=f.querySelector("button"); btn.textContent="One sec…"; btn.disabled=true;
+      await submitEmail(email,{source:source, price_variant:PRICE_VARIANT});
+      f.innerHTML='<p style="font-size:15px;color:var(--coral-cta);display:flex;align-items:center;justify-content:center;gap:8px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg> You\'re on the list. We onboard a small group each week — watch your inbox.</p>'+wtpBlock(source);
+    });
+  });
+
+  /* ====== audible cues: equalizer bars + rotating sensory caption ====== */
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  (function(){
+    var eq=document.getElementById("eq");
+    if(eq){ for(var i=0;i<18;i++){ var b=document.createElement("i"); b.style.animationDelay=(Math.random()).toFixed(2)+"s"; b.style.animationDuration=(0.7+Math.random()*0.7).toFixed(2)+"s"; eq.appendChild(b); } }
+    var caps=["the waves on the first morning","the playlist on the long drive","everyone singing happy birthday","rain on the tent at night"];
+    var nc=document.getElementById("nowCap"), ci=0;
+    if(nc && !reduce){ setInterval(function(){ ci=(ci+1)%caps.length; nc.style.opacity=0; setTimeout(function(){ nc.textContent=caps[ci]; nc.style.opacity=1; },250); }, 4000); }
+  })();
+
+  /* ====== hide the decorative play button once a real clip is playing ====== */
+  (function(){
+    var player=document.querySelector(".player");
+    if(!player) return;
+    var vids=player.querySelectorAll(".scene video.real");
+    vids.forEach(function(v){
+      v.addEventListener("playing", function(){ player.classList.add("is-playing"); });
+    });
+  })();
+
+  /* ====== living thumbnails: play clips only while they're on screen ====== */
+  (function(){
+    var vids=[].slice.call(document.querySelectorAll(".theme video, video.hv-film"));
+    if(!vids.length || reduce) return; // reduced-motion: leave the mood gradient as-is
+    if(!("IntersectionObserver" in window)){
+      vids.forEach(function(v){ var p=v.play(); if(p&&p.catch)p.catch(function(){}); });
+      return;
+    }
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        var v=e.target;
+        if(e.isIntersecting){ var p=v.play(); if(p&&p.catch)p.catch(function(){}); }
+        else { try{ v.pause(); }catch(_){} }
+      });
+    }, {threshold:0.3});
+    vids.forEach(function(v){ io.observe(v); });
+  })();
+
+  /* ====== modal ====== */
+  var overlay=document.getElementById("overlay");
+  var mForm=document.getElementById("mForm"), mOk=document.getElementById("mOk");
+  var mEmail=document.getElementById("mEmail"), mSubmit=document.getElementById("mSubmit");
+  var mTitle=document.getElementById("mTitle"), mCopy=document.getElementById("mCopy"), mEyebrow=document.getElementById("mEyebrow");
+  var ctx={};
+  var TIER_COPY={
+    free:{eyebrow:"Free preview",title:"See your first film free",copy:"Upload your trip and watch the whole film, sound and all — free and watermarked. Add your email and we'll send your invite to start."},
+    standard:{eyebrow:"Standard · "+fmt(PRICES.standard)+" (was "+fmt(PRICE_OLD.standard)+")",title:"Reserve your film in 1080p",copy:"Lock in early-adopter pricing on your full 1080p film — no watermark, download, share and keep it forever. We'll email your invite shortly."},
+    cinema:{eyebrow:"Cinema 4K · "+fmt(PRICES.cinema)+" (was "+fmt(PRICE_OLD.cinema)+")",title:"Reserve the 4K edition",copy:"Everything in Standard, in stunning 4K with priority rendering — at early-adopter pricing. We'll email your invite shortly."},
+    gift:{eyebrow:"Gift a film · "+fmt(PRICES.standard),title:"Give a film they'll never forget",copy:"Pop in your own email — we'll send you a gift link to share whenever you're ready, so there's no need for the recipient's details now. Your invite comes first."}
+  };
+  function openModal(reset){ if(reset){mForm.style.display="block";mOk.style.display="none";mEmail.value="";} overlay.classList.add("on");overlay.setAttribute("aria-hidden","false");setTimeout(function(){mEmail.focus();},50); }
+  function closeModal(){ overlay.classList.remove("on");overlay.setAttribute("aria-hidden","true"); }
+
+  document.querySelectorAll("[data-open]").forEach(function(el){
+    el.addEventListener("click", function(e){
+      e.preventDefault();
+      var kind=el.getAttribute("data-open");
+      if(kind==="tier"){
+        var tier=el.getAttribute("data-tier"), price=el.getAttribute("data-price");
+        ctx={tier:tier, price:Number(price), price_variant:PRICE_VARIANT};
+        track("pricing_cta_click", ctx);
+        var c=TIER_COPY[tier]; mEyebrow.textContent=c.eyebrow; mTitle.textContent=c.title; mCopy.textContent=c.copy;
+      } else {
+        ctx={tier:"nav_or_link", price:null, price_variant:PRICE_VARIANT};
+        track("cta_click", {where:kind, price_variant:PRICE_VARIANT});
+        mEyebrow.textContent="Private beta"; mTitle.textContent="Claim your spot"; mCopy.textContent="Pop in your email and we'll send your invite the moment a spot opens.";
+      }
+      openModal(true);
+    });
+  });
+  mSubmit.addEventListener("click", async function(){
+    var email=mEmail.value.trim();
+    if(!isEmail(email)){ mEmail.focus(); mEmail.style.borderColor="#c0392b"; return; }
+    mSubmit.textContent="One sec…"; mSubmit.disabled=true;
+    await submitEmail(email, ctx);
+    var w=document.getElementById("mWtp"); if(w) w.innerHTML=wtpInner();
+    mForm.style.display="none"; mOk.style.display="block";
+    setTimeout(function(){mSubmit.textContent="Reserve my spot"; mSubmit.disabled=false;},600);
+  });
+  overlay.querySelector(".close").addEventListener("click", closeModal);
+  overlay.addEventListener("click", function(e){ if(e.target===overlay) closeModal(); });
+  document.addEventListener("keydown", function(e){ if(e.key==="Escape" && overlay.classList.contains("on")) closeModal(); });
+
+  /* ====== navigation + content interactions — fan out to PostHog + Vercel + our DB ====== */
+  (function(){
+    document.querySelectorAll('.nav-links a.lnk, .foot-links a[href^="#"]').forEach(function(a){
+      a.addEventListener("click", function(){
+        track("nav_click", {target:(a.getAttribute("href")||"").replace("#",""), where:a.closest("footer")?"footer":"nav"});
+      });
+    });
+    document.querySelectorAll(".how-step").forEach(function(s){
+      s.addEventListener("click", function(){ track("how_step_click", {step:s.getAttribute("data-step")}); });
+    });
+    // a theme card is a soft CTA: clicking one signals intent and opens signup, pre-framed by the look
+    document.querySelectorAll(".theme").forEach(function(card){
+      card.style.cursor="pointer";
+      card.addEventListener("click", function(){
+        var name=card.getAttribute("data-theme")||"";
+        track("theme_click", {theme:name, price_variant:PRICE_VARIANT});
+        ctx={tier:"theme", price:null, theme:name, price_variant:PRICE_VARIANT};
+        mEyebrow.textContent="Theme · "+name;
+        mTitle.textContent="Make yours in "+name;
+        mCopy.textContent="Add your email and we'll send your invite — your first film in the "+name+" look is on us.";
+        openModal(true);
+      });
+    });
+  })();
+</script>
+</body>
+</html>
