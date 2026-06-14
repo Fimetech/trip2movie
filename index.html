@@ -873,7 +873,7 @@
       openModal(true);
     });
   });
-  mSubmit.addEventListener("click", async function(){
+  async function submitModal(){
     var email=mEmail.value.trim();
     if(!isEmail(email)){ mEmail.focus(); mEmail.style.borderColor="#c0392b"; return; }
     mSubmit.textContent="One sec…"; mSubmit.disabled=true;
@@ -881,6 +881,10 @@
     var w=document.getElementById("mWtp"); if(w) w.innerHTML=wtpInner();
     mForm.style.display="none"; mOk.style.display="block";
     setTimeout(function(){mSubmit.textContent="Reserve my spot"; mSubmit.disabled=false;},600);
+  }
+  mSubmit.addEventListener("click", submitModal);
+  mEmail.addEventListener("keydown", function(e){
+    if(e.key==="Enter"){ e.preventDefault(); submitModal(); }
   });
   overlay.querySelector(".close").addEventListener("click", closeModal);
   overlay.addEventListener("click", function(e){ if(e.target===overlay) closeModal(); });
