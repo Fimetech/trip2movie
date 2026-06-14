@@ -747,7 +747,7 @@
 
   track("page_view", {page:"landing", price_variant:PRICE_VARIANT, standard_price:PRICES.standard, cinema_price:PRICES.cinema});
 
-  /* ====== EMAIL CAPTURE — POST email + selected price + claim/gift to the DB ====== */
+  /* ====== EMAIL CAPTURE — POST email + WTP price + claim/gift to the DB ====== */
   var lastSignupEmail = null;
   async function postSignup(email, payload){
     try{
@@ -764,12 +764,12 @@
     props = props || {};
     var kind = props.tier === "gift" ? "gift" : "claim";
     track("lead_captured", Object.assign({email_domain:(email.split("@")[1]||"")}, props));
-    // Price is recorded when the user picks a WTP chip after signup, not from the tier list price.
+    // wtp_price is recorded when the user picks a WTP chip after signup, not from the tier list price.
     await postSignup(email, {email:email, kind:kind});
     lastSignupEmail = email;
   }
   async function submitWtpPrice(email, amount){
-    await postSignup(email, {email:email, price:Number(amount)});
+    await postSignup(email, {email:email, wtp_price:Number(amount)});
   }
   function isEmail(v){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);}
 

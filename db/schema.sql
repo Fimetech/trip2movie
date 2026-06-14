@@ -5,13 +5,13 @@
 create table if not exists signups (
   id          bigserial primary key,
   email       text unique not null,
-  price       numeric,                 -- the price tag the user selected (e.g. 19.99, 59, 0)
+  wtp_price   numeric,                 -- the willingness-to-pay (WTP) chip price 
   kind        text,                    -- 'claim' or 'gift'
   created_at  timestamptz not null default now()
 );
 
 -- Handy reads:
 --   select count(*) from signups;                                  -- real signups
---   select email, price, kind, created_at from signups order by created_at desc;
+--   select email, wtp_price, kind, created_at from signups order by created_at desc;
 --   select kind, count(*) from signups group by kind;              -- claim vs gift
---   select price, count(*) from signups group by price order by price;  -- price distribution
+--   select wtp_price, count(*) from signups group by wtp_price order by wtp_price;  -- WTP distribution
