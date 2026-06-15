@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//private/tmp/**)",
+      "Bash(python3 -)",
+      "Bash(sips --getProperty pixelWidth --getProperty pixelHeight /tmp/t2m_how_desk.png)",
+      "Bash(sips --getProperty pixelWidth --getProperty pixelHeight t2m_how_mob.png)",
+      "Bash(sips -c 1900 780 --cropOffset 2050 0 t2m_how_mob.png --out mob_how.png)",
+      "Bash(sips --getProperty pixelHeight mob_how.png)"
+    ]
+  }
+}

@@ -124,19 +124,21 @@
   .ewave i:nth-child(5){height:48%;animation-delay:.13s}
   .player{position:relative;flex:none;width:min(540px,50vw);aspect-ratio:16/9;margin-left:-18px;z-index:4;border-radius:16px;overflow:hidden;-webkit-mask-image:-webkit-radial-gradient(#fff,#000);mask-image:radial-gradient(#fff,#000);background:linear-gradient(160deg,#243660,#151d38);box-shadow:0 50px 90px -40px rgba(21,29,56,.65),0 0 0 1px rgba(255,255,255,.05);isolation:isolate}
   .scene{position:absolute;inset:0}
-  .scene .frame{position:absolute;inset:0;opacity:0;animation:reel 16s infinite}
+  .scene .frame{position:absolute;inset:0;opacity:0;animation:reel 20s infinite}
   .scene .frame > *{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
   .scene .frame .real{z-index:1}
   .scene .frame:nth-child(1){animation-delay:0s}
   .scene .frame:nth-child(2){animation-delay:4s}
   .scene .frame:nth-child(3){animation-delay:8s}
   .scene .frame:nth-child(4){animation-delay:12s}
+  .scene .frame:nth-child(5){animation-delay:16s}
   .f1{background:linear-gradient(165deg,#ffd29a,#ee8a5a 52%,#9c4a3a)}
   .f2{background:linear-gradient(165deg,#b9c6e6,#5a6fa6 50%,#1e2747)}
   .f3{background:linear-gradient(160deg,#f8c7c0,#e07d72 52%,#7e3a48)}
   .f4{background:linear-gradient(165deg,#c8e2c2,#5e9e6a 50%,#27513a)}
+  .f5{background:linear-gradient(165deg,#e4c6f0,#9c6fc4 50%,#41275e)}
   .scene .frame::after{content:"";position:absolute;inset:0;z-index:2;background:radial-gradient(130% 80% at 50% 125%, rgba(0,0,0,.34), transparent 58%)}
-  @keyframes reel{0%{opacity:0;transform:scale(1.14) translate(-2%,-1%)}4%{opacity:1}23%{opacity:1;transform:scale(1.02) translate(0,0)}27%{opacity:0}100%{opacity:0}}
+  @keyframes reel{0%{opacity:0;transform:scale(1.14) translate(-2%,-1%)}3.2%{opacity:1}18.4%{opacity:1;transform:scale(1.02) translate(0,0)}21.6%{opacity:0}100%{opacity:0}}
   .glow{position:absolute;inset:0;z-index:3;pointer-events:none;background:radial-gradient(55% 50% at 50% 40%, rgba(246,197,163,.26), transparent 72%);mix-blend-mode:screen}
   .vig{position:absolute;inset:0;z-index:4;pointer-events:none;box-shadow:inset 0 0 120px 24px rgba(0,0,0,.42)}
   .play{position:absolute;z-index:6;left:50%;top:50%;transform:translate(-50%,-50%);width:64px;height:64px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.16);backdrop-filter:blur(3px);border:1.5px solid rgba(255,255,255,.6);transition:opacity .35s ease}
@@ -147,7 +149,8 @@
   .eq i{width:2.5px;border-radius:2px;background:linear-gradient(var(--peach),var(--coral));height:20%;animation:eq 1s ease-in-out infinite alternate}
   @keyframes eq{from{height:12%}to{height:96%}}
 
-  .reel-cap{text-align:center;font-family:var(--serif);font-style:italic;font-size:15px;color:var(--ink-soft);margin-top:26px}
+  .reel-cap{text-align:center;font-family:var(--serif);font-size:19.5px;font-weight:500;line-height:1.5;color:var(--ink);margin:22px auto 0;max-width:50ch;text-wrap:pretty}
+  .reel-cap strong{font-weight:700;color:var(--coral-cta)}
 
   .hero-cap{margin:38px auto 0;max-width:500px}
   .hero-cap .row{display:flex;gap:12px}
@@ -175,50 +178,63 @@
   @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(222,84,54,.5)}70%{box-shadow:0 0 0 8px rgba(222,84,54,0)}100%{box-shadow:0 0 0 0 rgba(222,84,54,0)}}
   @media(max-width:560px){.proof{gap:11px;padding:8px 17px 8px 11px}.proof-lead{font-size:13.5px}.proof .count{font-size:15.5px}}
 
-  /* how it works */
-  .how-flow{display:flex;align-items:flex-start;justify-content:center;gap:0;margin-top:50px}
-  .how-step{flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:18px;max-width:300px}
-  .how-vis{position:relative;aspect-ratio:4/3;border-radius:18px;overflow:hidden;-webkit-mask-image:-webkit-radial-gradient(#fff,#000);mask-image:radial-gradient(#fff,#000);border:1px solid var(--line);box-shadow:0 26px 50px -30px rgba(27,37,64,.45)}
-  .how-txt{padding:0 2px}
-  .how-txt h3{font-family:var(--serif);font-size:21px;margin-bottom:5px}
-  .how-txt p{font-size:14.5px;color:var(--ink-soft)}
-  .how-arrow{flex:none;display:flex;align-items:center;justify-content:center;width:48px;color:var(--ink-soft);opacity:.4;align-self:flex-start;margin-top:13%}
-  .how-arrow svg{width:26px;height:26px}
-
-  /* step 1 — upload */
-  .hv-up{background:linear-gradient(160deg,#fff,var(--peach-soft))}
-  .hv-stack{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
-  .hv-photo{position:relative;width:25%;aspect-ratio:4/5;border-radius:9px;overflow:hidden;background:linear-gradient(160deg,#ffd29a,#ee8a5a);box-shadow:0 12px 26px -12px rgba(27,37,64,.5);border:3px solid #fff}
-  .hv-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-  .hv-photo.p1{transform:rotate(-9deg) translateX(34%)}
-  .hv-photo.p2{transform:rotate(0deg);z-index:2}
-  .hv-photo.p3{transform:rotate(9deg) translateX(-34%)}
-  .hv-pill{position:absolute;left:50%;bottom:15px;transform:translateX(-50%);display:inline-flex;align-items:center;gap:7px;white-space:nowrap;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:7px 13px;font-size:12px;font-weight:600;color:var(--ink);box-shadow:0 10px 22px -12px rgba(27,37,64,.4)}
-  .hv-pill svg{color:var(--coral-cta);flex:none}
-
-  /* step 2 — craft */
-  .hv-craft{background:linear-gradient(160deg,#243660,#151d38)}
-  .hv-craft::after{content:"";position:absolute;inset:0;background:radial-gradient(60% 50% at 50% 42%,rgba(246,197,163,.28),transparent 70%)}
-  .hv-eq{position:absolute;left:50%;top:42%;transform:translate(-50%,-50%);display:flex;align-items:flex-end;gap:4px;height:48px;z-index:1}
-  .hv-eq i{width:4px;border-radius:3px;background:linear-gradient(var(--peach),var(--coral));height:30%;animation:eq 1s ease-in-out infinite alternate}
-  .hv-eq i:nth-child(odd){animation-delay:.16s}
-  .hv-eq i:nth-child(3n){animation-delay:.32s}
-  .hv-eq i:nth-child(3n+1){animation-delay:.08s}
-  .hv-craft .hv-pill{z-index:1;background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.25);color:#fff;backdrop-filter:blur(3px)}
-  .hv-craft .hv-pill svg{color:var(--peach)}
-
-  /* step 3 — watch */
-  .hv-watch{background:linear-gradient(165deg,#ffd29a,#ee8a5a 52%,#9c4a3a)}
-  .hv-film{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1}
-  .hv-watch::after{content:"";position:absolute;inset:0;z-index:2;background:radial-gradient(130% 80% at 50% 120%,rgba(0,0,0,.42),transparent 60%)}
-  .hv-play{position:absolute;z-index:3;left:50%;top:50%;transform:translate(-50%,-50%);width:50px;height:50px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.18);border:1.5px solid rgba(255,255,255,.65);backdrop-filter:blur(3px)}
-  .hv-play svg{margin-left:3px}
+  /* how it works — one animated pipeline: ingredients -> combine & score -> 4K film */
+  .how-assembly{max-width:980px;margin:clamp(34px,5vw,54px) auto 0}
+  .ha-band{display:flex;align-items:center;justify-content:center;gap:clamp(14px,2.6vw,34px)}
+  /* zone 1: what you bring */
+  .ha-src{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(8px,1vw,12px);flex:none}
+  .ha-chip{display:inline-flex;align-items:center;gap:9px;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:clamp(8px,1vw,11px) clamp(13px,1.5vw,18px);font-size:clamp(12px,1.3vw,14.5px);font-weight:600;color:var(--ink);white-space:nowrap;box-shadow:0 16px 32px -18px rgba(27,37,64,.45)}
+  .ha-chip svg{color:var(--coral-cta);flex:none;width:17px;height:17px}
+  .ha-chip:nth-child(1){animation:ha-bob 3.4s ease-in-out infinite}
+  .ha-chip:nth-child(2){animation:ha-bob 3.4s ease-in-out .45s infinite}
+  .ha-chip:nth-child(3){animation:ha-bob 3.4s ease-in-out .9s infinite}
+  .ha-chip:nth-child(4){animation:ha-bob 3.4s ease-in-out 1.35s infinite}
+  @keyframes ha-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-2.5px)}}
+  /* zone 2: the rail they stream and combine across */
+  .ha-rail{position:relative;flex:1 1 auto;min-width:90px;align-self:stretch;min-height:clamp(120px,17vw,180px)}
+  .ha-rail::before{content:"";position:absolute;top:50%;left:0;right:6px;height:3px;transform:translateY(-50%);border-radius:3px;background:linear-gradient(90deg,transparent,var(--peach),var(--coral) 90%);opacity:.6}
+  .ha-arrow{position:absolute;top:50%;right:-4px;transform:translateY(-50%);color:var(--coral-cta);opacity:.8;width:26px;height:26px}
+  .ha-dot{position:absolute;top:50%;left:0;transform:translate(-50%,-50%);display:grid;place-items:center;width:clamp(30px,3.6vw,40px);height:clamp(30px,3.6vw,40px);border-radius:50%;background:var(--card);border:1px solid var(--line);color:var(--coral-cta);box-shadow:0 12px 24px -10px rgba(27,37,64,.5);opacity:0;animation:ha-travel-x 4.4s linear infinite}
+  .ha-dot svg{width:clamp(15px,1.8vw,19px);height:clamp(15px,1.8vw,19px)}
+  .ha-dot.d2{animation-delay:1.1s}
+  .ha-dot.d3{animation-delay:2.2s}
+  .ha-dot.d4{animation-delay:3.3s}
+  @keyframes ha-travel-x{0%{left:0;opacity:0;transform:translate(-50%,-50%) scale(.5)}13%{opacity:1;transform:translate(-50%,-50%) scale(1)}85%{left:100%;opacity:1;transform:translate(-50%,-50%) scale(1)}100%{left:100%;opacity:0;transform:translate(-50%,-50%) scale(.45)}}
+  @keyframes ha-travel-y{0%{top:0;opacity:0;transform:translate(-50%,-50%) scale(.5)}13%{opacity:1;transform:translate(-50%,-50%) scale(1)}85%{top:100%;opacity:1;transform:translate(-50%,-50%) scale(1)}100%{top:100%;opacity:0;transform:translate(-50%,-50%) scale(.45)}}
+  /* zone 3: the finished cinematic 4K film */
+  .ha-film{position:relative;flex:none;width:clamp(260px,32vw,400px);aspect-ratio:16/9;border-radius:18px;overflow:hidden;background:linear-gradient(160deg,#243660,#151d38);box-shadow:0 44px 78px -36px rgba(21,29,56,.72),0 0 0 1px rgba(255,255,255,.06);-webkit-mask-image:-webkit-radial-gradient(#fff,#000);mask-image:radial-gradient(#fff,#000);animation:ha-glow 4.4s ease-in-out infinite}
+  .ha-film video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1}
+  .ha-vig{position:absolute;inset:0;z-index:2;pointer-events:none;box-shadow:inset 0 0 90px 18px rgba(0,0,0,.4);background:radial-gradient(125% 80% at 50% 122%,rgba(0,0,0,.42),transparent 60%)}
+  .ha-play{position:absolute;z-index:3;left:50%;top:50%;transform:translate(-50%,-50%);width:clamp(52px,6vw,66px);height:clamp(52px,6vw,66px);border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.16);backdrop-filter:blur(3px);border:1.5px solid rgba(255,255,255,.6)}
+  .ha-play svg{margin-left:4px}
+  .ha-4k{position:absolute;z-index:4;top:11px;right:11px;font-size:11px;font-weight:800;letter-spacing:.04em;color:#fff;background:rgba(222,84,54,.94);border-radius:6px;padding:4px 8px;line-height:1}
+  .ha-sound{position:absolute;z-index:4;left:50%;bottom:12px;transform:translateX(-50%);display:inline-flex;align-items:center;gap:8px;color:rgba(255,255,255,.92)}
+  .ha-eq{display:flex;align-items:flex-end;gap:2.5px;height:18px}
+  .ha-eq i{width:2.5px;border-radius:2px;background:linear-gradient(var(--peach),var(--coral));height:20%;animation:eq 1s ease-in-out infinite alternate}
+  .ha-eq i:nth-child(2){animation-delay:.18s}
+  .ha-eq i:nth-child(3){animation-delay:.07s}
+  .ha-eq i:nth-child(4){animation-delay:.25s}
+  .ha-eq i:nth-child(5){animation-delay:.13s}
+  @keyframes ha-glow{0%,100%{box-shadow:0 44px 78px -36px rgba(21,29,56,.72),0 0 0 1px rgba(255,255,255,.06)}50%{box-shadow:0 48px 88px -32px rgba(238,108,77,.5),0 0 0 1px rgba(255,255,255,.12)}}
+  /* the three-step narrative, aligned under the pipeline */
+  .ha-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(18px,3vw,40px);max-width:880px;margin:clamp(30px,4vw,52px) auto 0}
+  .ha-step{display:flex;flex-direction:column;align-items:center;text-align:center;gap:9px}
+  .ha-num{display:grid;place-items:center;width:30px;height:30px;flex:none;border-radius:50%;background:var(--peach-soft);color:var(--coral-cta);font-weight:800;font-size:14px;font-variant-numeric:tabular-nums}
+  .ha-step h3{font-family:var(--serif);font-size:clamp(18px,2vw,21px)}
+  .ha-step p{font-size:14.5px;color:var(--ink-soft);max-width:32ch;text-wrap:pretty}
+  @media(prefers-reduced-motion:reduce){.ha-dot{display:none}}
 
   @media(max-width:760px){
-    .how-flow{flex-direction:column;align-items:center;gap:8px;max-width:340px;margin-left:auto;margin-right:auto}
-    .how-step{max-width:none;width:100%;flex:none}
-    .how-vis{aspect-ratio:16/9}
-    .how-arrow{width:100%;height:30px;margin:0;align-self:center;transform:rotate(90deg)}
+    .how-assembly{max-width:430px}
+    .ha-band{flex-direction:column;gap:16px}
+    .ha-src{grid-template-columns:repeat(2,1fr);width:100%;max-width:340px;gap:9px}
+    .ha-chip{justify-content:center;font-size:13px}
+    .ha-rail{width:100%;align-self:auto;min-height:66px}
+    .ha-rail::before{top:0;bottom:0;left:50%;right:auto;width:3px;height:auto;transform:translateX(-50%);background:linear-gradient(180deg,transparent,var(--peach),var(--coral) 90%)}
+    .ha-arrow{top:auto;right:auto;bottom:-5px;left:50%;transform:translateX(-50%) rotate(90deg)}
+    .ha-dot{top:0;left:50%;animation-name:ha-travel-y}
+    .ha-film{width:100%;max-width:360px}
+    .ha-steps{grid-template-columns:1fr;max-width:360px;gap:22px;text-align:center}
   }
 
   @media(max-width:880px){
@@ -356,7 +372,7 @@
     .sec{padding:52px 0}
     .band .wrap{padding:60px 20px}
     .final{padding:64px 0}
-    .reel-cap{font-size:14px;margin-top:20px}
+    .reel-cap{font-size:17px;margin-top:16px}
     .hero-cap{margin-top:30px}
     .band-points{gap:12px 24px}
     .tier{padding:28px 22px}
@@ -439,22 +455,23 @@
         </div>
         <span class="becomes" aria-hidden="true">&darr;</span>
         <div class="player">
-          <!-- The film cross-fades through these short clips. Save assets/movie-1..4.mp4 (16:9, muted). A missing clip falls back to its gradient. -->
+          <!-- The film cross-fades through these short clips. Save assets/movie-1..5 (16:9, muted). A missing clip falls back to its gradient. -->
           <div class="scene">
-            <!-- Only clip #1 loads eagerly (high priority). Clips #2–4 start preload=none with no
+            <!-- Only clip #1 loads eagerly (high priority). Clips #2–5 start preload=none with no
                  autoplay so they don't fight #1 for bandwidth; the script warms them just before
-                 their 4s/8s/12s slots. A missing clip falls back to its gradient. -->
+                 their 4s/8s/12s/16s slots. A missing clip falls back to its gradient. -->
             <div class="frame"><span class="ph f1"></span><video class="real" src="https://iggv7s70mkfvuteh.public.blob.vercel-storage.com/movies/movie-1.mp4" muted loop autoplay playsinline preload="auto" fetchpriority="high" onerror="this.remove()"></video></div>
             <div class="frame"><span class="ph f2"></span><video class="real" src="https://iggv7s70mkfvuteh.public.blob.vercel-storage.com/movies/movie-2.mp4" muted loop playsinline preload="none" fetchpriority="low" onerror="this.remove()"></video></div>
             <div class="frame"><span class="ph f3"></span><video class="real" src="https://iggv7s70mkfvuteh.public.blob.vercel-storage.com/movies/movie-3.mp4" muted loop playsinline preload="none" fetchpriority="low" onerror="this.remove()"></video></div>
             <div class="frame"><span class="ph f4"></span><video class="real" src="https://iggv7s70mkfvuteh.public.blob.vercel-storage.com/movies/movie-4.mp4" muted loop playsinline preload="none" fetchpriority="low" onerror="this.remove()"></video></div>
+            <div class="frame"><span class="ph f5"></span><video class="real" src="https://iggv7s70mkfvuteh.public.blob.vercel-storage.com/movies/movie-5.mov" muted loop playsinline preload="none" fetchpriority="low" onerror="this.remove()"></video></div>
           </div>
           <div class="glow"></div><div class="vig"></div>
           <div class="play" aria-hidden="true"><svg width="18" height="22" viewBox="0 0 22 26" fill="#fff"><path d="M0 0l22 13L0 26z"/></svg></div>
           <div class="sound" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7" fill="none" stroke="currentColor" stroke-width="2"/></svg><span class="eq" id="eq"></span></div>
         </div>
       </div>
-      <p class="reel-cap">Your scattered photos and clips &mdash; stitched into one film, with the sound back on.</p>
+      <p class="reel-cap">Turn your <strong>travel memos, photos and clips</strong> into a cinematic <strong>4K film</strong> you can actually feel.</p>
     </div>
 
     <form class="hero-cap capture" data-source="hero">
@@ -480,40 +497,39 @@
   <div class="wrap">
     <div class="sec-head mid">
       <span class="eyebrow dim">How it works</span>
-      <h2>From camera roll to cinema, in three steps.</h2>
-      <p>No editing skills, no timeline to wrangle. Bring the moments &mdash; we do the rest.</p>
+      <h2>Scattered memories in. One cinematic film out.</h2>
+      <p>No editing skills, no timeline to wrangle. Your photos, clips, voice notes and music flow together &mdash; we cut, score and color them into a 4K film. Bring the moments; we do the rest.</p>
     </div>
-    <div class="how-flow">
-      <div class="how-step" data-step="upload">
-        <div class="how-vis hv-up">
-          <div class="hv-stack" aria-hidden="true">
-            <span class="hv-photo p1"><img src="https://iggv7s70mkfvuteh.public.blob.vercel-storage.com/images/snap-1.jpg" alt="" loading="lazy" decoding="async" onerror="this.remove()"></span>
-            <span class="hv-photo p2"><img src="https://iggv7s70mkfvuteh.public.blob.vercel-storage.com/images/snap-2.jpg" alt="" loading="lazy" decoding="async" onerror="this.remove()"></span>
-            <span class="hv-photo p3"><img src="https://iggv7s70mkfvuteh.public.blob.vercel-storage.com/images/snap-3.jpg" alt="" loading="lazy" decoding="async" onerror="this.remove()"></span>
-          </div>
-          <span class="hv-pill"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 16V4m0 0L8 8m4-4l4 4"/><path d="M4 16v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>Adding 24 photos &middot; 3 clips</span>
+
+    <!-- one continuous pipeline: ingredients stream left -> right and become a 4K film -->
+    <div class="how-assembly">
+      <div class="ha-band">
+        <div class="ha-src" aria-hidden="true">
+          <span class="ha-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.6"/><path d="M21 15l-5-5L5 21"/></svg>Photos</span>
+          <span class="ha-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>Clips</span>
+          <span class="ha-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="2" width="6" height="11" rx="3"/><path d="M5 10a7 7 0 0 0 14 0"/><line x1="12" y1="19" x2="12" y2="22"/></svg>Voice notes</span>
+          <span class="ha-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>Music</span>
         </div>
-        <div class="how-txt"><h3>Bring your moments</h3><p>Drop in photos and clips straight from your phone &mdash; even the messy, out-of-order ones.</p></div>
-      </div>
-
-      <div class="how-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></div>
-
-      <div class="how-step" data-step="craft">
-        <div class="how-vis hv-craft">
-          <span class="hv-eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
-          <span class="hv-pill"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.2 5.8L20 10l-5.8 2.2L12 18l-2.2-5.8L4 10l5.8-2.2z"/></svg>Scoring your film&hellip;</span>
+        <div class="ha-rail" aria-hidden="true">
+          <span class="ha-dot d1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.6"/><path d="M21 15l-5-5L5 21"/></svg></span>
+          <span class="ha-dot d2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></span>
+          <span class="ha-dot d3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="2" width="6" height="11" rx="3"/><path d="M5 10a7 7 0 0 0 14 0"/><line x1="12" y1="19" x2="12" y2="22"/></svg></span>
+          <span class="ha-dot d4"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></span>
+          <svg class="ha-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h13m0 0l-5-5m5 5l-5 5"/></svg>
         </div>
-        <div class="how-txt"><h3>We edit &amp; score it</h3><p>Pick a look and we cut, pace and score it &mdash; your clips&rsquo; real sound, under an original track.</p></div>
-      </div>
-
-      <div class="how-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></div>
-
-      <div class="how-step" data-step="watch">
-        <div class="how-vis hv-watch">
+        <div class="ha-film" aria-hidden="true">
           <video class="hv-film" src="https://iggv7s70mkfvuteh.public.blob.vercel-storage.com/movies/movie-2.mp4" muted loop playsinline preload="none" onerror="this.remove()"></video>
-          <span class="hv-play" aria-hidden="true"><svg width="15" height="18" viewBox="0 0 22 26" fill="#fff"><path d="M0 0l22 13L0 26z"/></svg></span>
+          <span class="ha-vig"></span>
+          <span class="ha-play"><svg width="15" height="18" viewBox="0 0 22 26" fill="#fff"><path d="M0 0l22 13L0 26z"/></svg></span>
+          <span class="ha-4k">4K</span>
+          <span class="ha-sound"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7" fill="none" stroke="currentColor" stroke-width="2"/></svg><span class="ha-eq"><i></i><i></i><i></i><i></i><i></i></span></span>
         </div>
-        <div class="how-txt"><h3>Press play, together</h3><p>Minutes later your film is ready &mdash; watch it, share it in a tap, and keep it forever in HD.</p></div>
+      </div>
+
+      <div class="ha-steps">
+        <div class="ha-step" data-step="upload"><span class="ha-num">1</span><h3>Bring your moments</h3><p>Drop in photos and clips straight from your phone &mdash; even the messy, out-of-order ones.</p></div>
+        <div class="ha-step" data-step="craft"><span class="ha-num">2</span><h3>We edit &amp; score it</h3><p>We cut, pace and color it &mdash; your clips&rsquo; real sound under an original score.</p></div>
+        <div class="ha-step" data-step="watch"><span class="ha-num">3</span><h3>Press play, together</h3><p>Minutes later your film is ready &mdash; watch it, share it in a tap, and keep it forever in 4K.</p></div>
       </div>
     </div>
   </div>
@@ -958,7 +974,7 @@
         track("nav_click", {target:(a.getAttribute("href")||"").replace("#",""), where:a.closest("footer")?"footer":"nav"});
       });
     });
-    document.querySelectorAll(".how-step").forEach(function(s){
+    document.querySelectorAll(".ha-step").forEach(function(s){
       s.addEventListener("click", function(){ track("how_step_click", {step:s.getAttribute("data-step")}); });
     });
     // a theme card is a soft CTA: clicking one signals intent and opens signup, pre-framed by the look
