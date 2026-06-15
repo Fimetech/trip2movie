@@ -21,6 +21,12 @@
      WIRE-UP #1 (email backend) and #2 (analytics) -> search "WIRE-UP".
      ============================================================ -->
 
+<!-- Media CDN — open the TCP/TLS connection before anything else and pull the first hero clip
+     at top priority so its first frame paints the moment the page does (biggest first-visit win). -->
+<link rel="preconnect" href="https://iggv7s70mkfvuteh.public.blob.vercel-storage.com" />
+<link rel="dns-prefetch" href="https://iggv7s70mkfvuteh.public.blob.vercel-storage.com" />
+<link rel="preload" as="video" type="video/mp4" fetchpriority="high" href="https://iggv7s70mkfvuteh.public.blob.vercel-storage.com/movies/movie-1.mp4" />
+
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500;1,6..72,600&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -150,22 +156,8 @@
   .hero-cap input:focus{outline:none;border-color:var(--indigo);box-shadow:0 0 0 3px rgba(38,52,95,.14)}
   @media(max-width:520px){.hero-cap .row{flex-direction:column}.hero-cap .btn{width:100%}}
 
-  /* the gift lives INSIDE the CTA — one informative action button */
+  /* one clean action label — the gift is spelled out in the modal & pricing note */
   .hero-cap .row{align-items:stretch}
-  .btn-claim{flex-direction:column;gap:3px;line-height:1.05;padding:11px 26px}
-  .btn-claim .bc-main{font-size:15px;font-weight:600}
-  .btn-claim .bc-sub{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:600;
-    letter-spacing:.005em;color:var(--peach-soft)}
-  .btn-claim .bc-sub svg{flex:none;opacity:.95}
-  .btn-claim .bc-sub b{font-weight:800;font-size:1.18em}
-  /* on light/ghost buttons the soft sub-label would vanish — use coral instead */
-  .btn.ghost .bc-sub{color:var(--coral-cta)}
-  /* compact variant for the slim nav button */
-  .nav-cta.btn-claim{padding:7px 16px}
-  .nav-cta.btn-claim .bc-main{font-size:13.5px}
-  .nav-cta.btn-claim .bc-sub{font-size:10px;gap:4px;letter-spacing:.01em}
-  .nav-cta.btn-claim .bc-sub svg{width:10px;height:10px}
-  @media(max-width:520px){.btn-claim{padding:12px 26px}}
 
   .proof{display:inline-flex;align-items:center;gap:13px;margin:24px auto 0;padding:9px 22px 9px 13px;background:var(--card);border:1px solid var(--line);border-radius:999px;box-shadow:0 16px 34px -20px rgba(27,37,64,.42);text-align:left}
   .avatars{display:inline-flex;flex:none}
@@ -419,10 +411,7 @@
       <a class="lnk" href="#pricing">Pricing</a>
       <a class="lnk" href="#gift">Gift</a>
       <a class="lnk" href="#faq">FAQ</a>
-      <button class="btn nav-cta btn-claim" data-open="nav">
-        <span class="bc-main">Claim your spot</span>
-        <span class="bc-sub"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg><b>5</b> free <b>4K</b> films</span>
-      </button>
+      <button class="btn nav-cta" data-open="nav">Claim your spot</button>
     </div>
   </div>
 </nav>
@@ -444,18 +433,21 @@
             <span class="ingredient ing-clip-a"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M4 3l16 9-16 9z"/></svg>Clip &middot; 0:08</span>
             <span class="ingredient ing-clip-b"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M4 3l16 9-16 9z"/></svg>Clip &middot; 0:15</span>
           </div>
-          <div class="snap s1"><span class="pic p1"></span><img class="pic" src="https://iggv7s70mkfvuteh.public.blob.vercel-storage.com/images/snap-1.jpg" alt="" onerror="this.remove()"></div>
-          <div class="snap s2"><span class="pic p2"></span><img class="pic" src="https://iggv7s70mkfvuteh.public.blob.vercel-storage.com/images/snap-2.jpg" alt="" onerror="this.remove()"></div>
-          <div class="snap s3"><span class="pic p3"></span><img class="pic" src="https://iggv7s70mkfvuteh.public.blob.vercel-storage.com/images/snap-3.jpg" alt="" onerror="this.remove()"></div>
+          <div class="snap s1"><span class="pic p1"></span><img class="pic" src="https://iggv7s70mkfvuteh.public.blob.vercel-storage.com/images/snap-1.jpg" alt="" fetchpriority="low" decoding="async" onerror="this.remove()"></div>
+          <div class="snap s2"><span class="pic p2"></span><img class="pic" src="https://iggv7s70mkfvuteh.public.blob.vercel-storage.com/images/snap-2.jpg" alt="" fetchpriority="low" decoding="async" onerror="this.remove()"></div>
+          <div class="snap s3"><span class="pic p3"></span><img class="pic" src="https://iggv7s70mkfvuteh.public.blob.vercel-storage.com/images/snap-3.jpg" alt="" fetchpriority="low" decoding="async" onerror="this.remove()"></div>
         </div>
         <span class="becomes" aria-hidden="true">&darr;</span>
         <div class="player">
           <!-- The film cross-fades through these short clips. Save assets/movie-1..4.mp4 (16:9, muted). A missing clip falls back to its gradient. -->
           <div class="scene">
-            <div class="frame"><span class="ph f1"></span><video class="real" src="https://iggv7s70mkfvuteh.public.blob.vercel-storage.com/movies/movie-1.mp4" muted loop autoplay playsinline preload="auto" onerror="this.remove()"></video></div>
-            <div class="frame"><span class="ph f2"></span><video class="real" src="https://iggv7s70mkfvuteh.public.blob.vercel-storage.com/movies/movie-2.mp4" muted loop autoplay playsinline preload="auto" onerror="this.remove()"></video></div>
-            <div class="frame"><span class="ph f3"></span><video class="real" src="https://iggv7s70mkfvuteh.public.blob.vercel-storage.com/movies/movie-3.mp4" muted loop autoplay playsinline preload="auto" onerror="this.remove()"></video></div>
-            <div class="frame"><span class="ph f4"></span><video class="real" src="https://iggv7s70mkfvuteh.public.blob.vercel-storage.com/movies/movie-4.mp4" muted loop autoplay playsinline preload="auto" onerror="this.remove()"></video></div>
+            <!-- Only clip #1 loads eagerly (high priority). Clips #2–4 start preload=none with no
+                 autoplay so they don't fight #1 for bandwidth; the script warms them just before
+                 their 4s/8s/12s slots. A missing clip falls back to its gradient. -->
+            <div class="frame"><span class="ph f1"></span><video class="real" src="https://iggv7s70mkfvuteh.public.blob.vercel-storage.com/movies/movie-1.mp4" muted loop autoplay playsinline preload="auto" fetchpriority="high" onerror="this.remove()"></video></div>
+            <div class="frame"><span class="ph f2"></span><video class="real" src="https://iggv7s70mkfvuteh.public.blob.vercel-storage.com/movies/movie-2.mp4" muted loop playsinline preload="none" fetchpriority="low" onerror="this.remove()"></video></div>
+            <div class="frame"><span class="ph f3"></span><video class="real" src="https://iggv7s70mkfvuteh.public.blob.vercel-storage.com/movies/movie-3.mp4" muted loop playsinline preload="none" fetchpriority="low" onerror="this.remove()"></video></div>
+            <div class="frame"><span class="ph f4"></span><video class="real" src="https://iggv7s70mkfvuteh.public.blob.vercel-storage.com/movies/movie-4.mp4" muted loop playsinline preload="none" fetchpriority="low" onerror="this.remove()"></video></div>
           </div>
           <div class="glow"></div><div class="vig"></div>
           <div class="play" aria-hidden="true"><svg width="18" height="22" viewBox="0 0 22 26" fill="#fff"><path d="M0 0l22 13L0 26z"/></svg></div>
@@ -468,17 +460,14 @@
     <form class="hero-cap capture" data-source="hero">
       <div class="row">
         <input type="email" required placeholder="you@email.com" aria-label="Email address" />
-        <button class="btn btn-claim" type="submit">
-          <span class="bc-main">Claim your early spot</span>
-          <span class="bc-sub"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>+ <b>5</b> Cinema <b>4K</b> films free</span>
-        </button>
+        <button class="btn" type="submit">Claim your early spot</button>
       </div>
     </form>
     <div class="proof">
-      <span class="avatars" id="proofAvatars"><i class="a1"><img src="https://iggv7s70mkfvuteh.public.blob.vercel-storage.com/avatar/1.jpg" alt=""></i><i class="a2"><img src="https://iggv7s70mkfvuteh.public.blob.vercel-storage.com/avatar/2.jpg" alt=""></i><i class="a3"><img src="https://iggv7s70mkfvuteh.public.blob.vercel-storage.com/avatar/3.jpg" alt=""></i><i class="a4"><img src="https://iggv7s70mkfvuteh.public.blob.vercel-storage.com/avatar/4.jpg" alt=""></i></span>
+      <span class="avatars" id="proofAvatars"><i class="a1"><img src="https://iggv7s70mkfvuteh.public.blob.vercel-storage.com/avatar/1.jpg" alt="" fetchpriority="low" decoding="async"></i><i class="a2"><img src="https://iggv7s70mkfvuteh.public.blob.vercel-storage.com/avatar/2.jpg" alt="" fetchpriority="low" decoding="async"></i><i class="a3"><img src="https://iggv7s70mkfvuteh.public.blob.vercel-storage.com/avatar/3.jpg" alt="" fetchpriority="low" decoding="async"></i><i class="a4"><img src="https://iggv7s70mkfvuteh.public.blob.vercel-storage.com/avatar/4.jpg" alt="" fetchpriority="low" decoding="async"></i></span>
       <span class="proof-txt">
         <span class="proof-lead"><span class="live" aria-hidden="true"></span><strong id="proofCount" class="count">…</strong> families on the waitlist</span>
-        <span class="proof-sub">New invites every week &middot; <span class="muted">Private &amp; free to try</span></span>
+        <span class="proof-sub">New invites every week &middot; <span class="muted">Your first film&rsquo;s on us</span></span>
       </span>
     </div>
 
@@ -498,9 +487,9 @@
       <div class="how-step" data-step="upload">
         <div class="how-vis hv-up">
           <div class="hv-stack" aria-hidden="true">
-            <span class="hv-photo p1"><img src="https://iggv7s70mkfvuteh.public.blob.vercel-storage.com/images/snap-1.jpg" alt="" onerror="this.remove()"></span>
-            <span class="hv-photo p2"><img src="https://iggv7s70mkfvuteh.public.blob.vercel-storage.com/images/snap-2.jpg" alt="" onerror="this.remove()"></span>
-            <span class="hv-photo p3"><img src="https://iggv7s70mkfvuteh.public.blob.vercel-storage.com/images/snap-3.jpg" alt="" onerror="this.remove()"></span>
+            <span class="hv-photo p1"><img src="https://iggv7s70mkfvuteh.public.blob.vercel-storage.com/images/snap-1.jpg" alt="" loading="lazy" decoding="async" onerror="this.remove()"></span>
+            <span class="hv-photo p2"><img src="https://iggv7s70mkfvuteh.public.blob.vercel-storage.com/images/snap-2.jpg" alt="" loading="lazy" decoding="async" onerror="this.remove()"></span>
+            <span class="hv-photo p3"><img src="https://iggv7s70mkfvuteh.public.blob.vercel-storage.com/images/snap-3.jpg" alt="" loading="lazy" decoding="async" onerror="this.remove()"></span>
           </div>
           <span class="hv-pill"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 16V4m0 0L8 8m4-4l4 4"/><path d="M4 16v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>Adding 24 photos &middot; 3 clips</span>
         </div>
@@ -581,38 +570,32 @@
   <div class="wrap">
     <div class="sec-head mid">
       <span class="eyebrow dim">Simple pricing</span>
-      <h2>Start free. Pay only to keep it.</h2>
-      <p>Make your first film and watch the whole thing &mdash; sound and all &mdash; before you spend a cent.</p>
+      <h2>Your first film is free to keep.</h2>
+      <p>Make a real film of your trip &mdash; full HD, no watermark, yours forever. Loved it? Make more at founding-member pricing, locked in for life.</p>
     </div>
     <div class="price-grid">
       <div class="tier">
-        <h3>Free preview</h3>
-        <p class="blurb">See the magic on your own trip. No card needed.</p>
+        <h3>Your first film</h3>
+        <p class="blurb">A real film of your trip &mdash; on us. No card needed.</p>
         <div class="amt">Free</div>
         <ul>
           <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>Upload your trip &amp; pick any theme</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>Watch the full film with sound</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>Watermarked, plays in the browser</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>Full HD film, with sound</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>No watermark &mdash; download, share, keep it forever</li>
         </ul>
-        <button class="btn ghost btn-claim" data-open="tier" data-tier="free" data-price="0">
-          <span class="bc-main">Start free</span>
-          <span class="bc-sub"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>+ <b>5</b> Cinema <b>4K</b> films free</span>
-        </button>
+        <button class="btn ghost" data-open="tier" data-tier="free" data-price="0">Start free</button>
       </div>
       <div class="tier">
         <h3>Standard</h3>
-        <p class="blurb">Your film in crisp 1080p &mdash; yours to keep.</p>
+        <p class="blurb">Loved your first? Make more &mdash; in crisp 1080p.</p>
         <div class="amt"><span class="was">$89</span>$19.99 <small>/ film</small><span class="off">&minus;78%</span></div>
-        <p class="incl">Everything in Preview, plus:</p>
+        <p class="incl">For every film after your first:</p>
         <ul>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>Full film in 1080p HD</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>No watermark &mdash; download, share, keep forever</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>Full film in 1080p HD, no watermark</li>
           <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>Your clips&rsquo; real audio + an original score</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>Founding price locked for life &mdash; even after launch</li>
         </ul>
-        <button class="btn btn-claim" data-open="tier" data-tier="standard" data-price="19.99">
-          <span class="bc-main">Reserve in 1080p</span>
-          <span class="bc-sub"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>+ <b>5</b> Cinema <b>4K</b> films free</span>
-        </button>
+        <button class="btn" data-open="tier" data-tier="standard" data-price="19.99">Reserve in 1080p</button>
       </div>
       <div class="tier feat">
         <span class="pill">Most chosen</span>
@@ -625,10 +608,7 @@
           <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>Priority rendering &mdash; ready in minutes</li>
           <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>Crisp on the biggest screen in the house</li>
         </ul>
-        <button class="btn btn-claim" data-open="tier" data-tier="cinema" data-price="59">
-          <span class="bc-main">Reserve in 4K</span>
-          <span class="bc-sub"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>+ <b>5</b> Cinema <b>4K</b> films free</span>
-        </button>
+        <button class="btn" data-open="tier" data-tier="cinema" data-price="59">Reserve in 4K</button>
       </div>
     </div>
     <div class="gift" id="gift">
@@ -637,12 +617,9 @@
         <h3>Or give one as a gift.</h3>
         <p>Reserve with <strong>your own</strong> email &mdash; we&rsquo;ll send you a gift link to pass on whenever you&rsquo;re ready. No need for their details now.</p>
       </div>
-      <button class="btn ind btn-claim" data-open="tier" data-tier="gift" data-price="19.99">
-        <span class="bc-main">Get a gift link</span>
-        <span class="bc-sub"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>+ <b>5</b> Cinema <b>4K</b> films free</span>
-      </button>
+      <button class="btn ind" data-open="tier" data-tier="gift" data-price="19.99">Get a gift link</button>
     </div>
-    <p class="price-note">Early-adopter pricing &mdash; up to 78% off launch prices, plus 5 free Cinema 4K films for early users. Locked in for you, even after we launch.</p>
+    <p class="price-note">Founding-member pricing &mdash; up to 78% off launch prices, locked in for life. Your first film is free to keep, and every paid film is covered by our love-it-or-it&rsquo;s-free promise.</p>
   </div>
 </section>
 
@@ -674,6 +651,10 @@
         <summary>When can I actually use it? <span class="x">+</span></summary>
         <p>We&rsquo;re rolling out invites from the private beta in small groups each week. Join the list and we&rsquo;ll email you the moment your spot opens.</p>
       </details>
+      <details>
+        <summary>What if I don&rsquo;t love my film? <span class="x">+</span></summary>
+        <p>Then you don&rsquo;t pay. Your first film is free either way &mdash; and every paid film comes with a love-it-or-it&rsquo;s-free promise. If the result isn&rsquo;t worth keeping, we&rsquo;ll make it right or refund it, no questions.</p>
+      </details>
     </div>
   </div>
 </section>
@@ -686,10 +667,7 @@
     <form class="hero-cap capture" data-source="footer">
       <div class="row">
         <input type="email" required placeholder="you@email.com" aria-label="Email address" />
-        <button class="btn btn-claim" type="submit">
-          <span class="bc-main">Claim your early spot</span>
-          <span class="bc-sub"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>+ <b>5</b> Cinema <b>4K</b> films free</span>
-        </button>
+        <button class="btn" type="submit">Claim your early spot</button>
       </div>
       <p class="micro">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
@@ -721,13 +699,10 @@
       <p id="mCopy">Pop in your email and we&rsquo;ll send your invite the moment a spot opens.</p>
       <div class="modal-bonus">
         <span class="mb-ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg></span>
-        <p><strong>Early-user gift:</strong> we&rsquo;ll add <strong>5 free Cinema 4K films</strong> (<span id="mbValue">$295</span> value) to your account &mdash; whatever you choose today.</p>
+        <p><strong>Founding member:</strong> your first film is <strong>free to keep</strong> &mdash; full HD, no watermark &mdash; and you lock in early-adopter pricing for life on every film after.</p>
       </div>
       <input type="email" id="mEmail" required placeholder="you@email.com" aria-label="Email address" />
-      <button class="btn btn-claim" id="mSubmit">
-        <span class="bc-main">Reserve my spot</span>
-        <span class="bc-sub"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>+ <b>5</b> Cinema <b>4K</b> films free</span>
-      </button>
+      <button class="btn" id="mSubmit">Reserve my spot</button>
     </div>
     <div class="ok" id="mOk" style="display:none">
       <div class="check"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></div>
@@ -801,7 +776,6 @@
     if(s){ s.setAttribute("data-price",PRICES.standard); var st=s.closest(".tier"), sa=st&&st.querySelector(".amt"); if(sa) sa.innerHTML=amtHTML(PRICE_OLD.standard, PRICES.standard); }
     if(c){ c.setAttribute("data-price",PRICES.cinema); var ct=c.closest(".tier"), ca=ct&&ct.querySelector(".amt"); if(ca) ca.innerHTML=amtHTML(PRICE_OLD.cinema, PRICES.cinema); }
     if(g){ g.setAttribute("data-price",PRICES.standard); }
-    var mb=document.getElementById("mbValue"); if(mb) mb.textContent=fmt(PRICES.cinema*5);
   })();
 
   track("page_view", {page:"landing", price_variant:PRICE_VARIANT, standard_price:PRICES.standard, cinema_price:PRICES.cinema});
@@ -872,14 +846,41 @@
     if(eq){ for(var i=0;i<18;i++){ var b=document.createElement("i"); b.style.animationDelay=(Math.random()).toFixed(2)+"s"; b.style.animationDuration=(0.7+Math.random()*0.7).toFixed(2)+"s"; eq.appendChild(b); } }
   })();
 
-  /* ====== hide the decorative play button once a real clip is playing ====== */
+  /* ====== hero reel: play clip #1 instantly, then warm the rest just-in-time ======
+     Only clip #1 is eager (preload=auto + fetchpriority=high + a <link rel=preload> in <head>),
+     so it gets the whole pipe and its first frame paints fast on a cold first visit. Clips #2–4
+     start preload=none with no autoplay; we load+play them one at a time once #1 is rolling, well
+     ahead of their 4s/8s/12s slots. Any clip not yet ready simply shows its gradient placeholder. */
   (function(){
     var player=document.querySelector(".player");
     if(!player) return;
-    var vids=player.querySelectorAll(".scene video.real");
+    var vids=[].slice.call(player.querySelectorAll(".scene video.real"));
+    if(!vids.length) return;
     vids.forEach(function(v){
       v.addEventListener("playing", function(){ player.classList.add("is-playing"); });
     });
+
+    // reduced-motion: CSS shows only frame #1 and freezes the reel — never fetch the rest.
+    if(reduce) return;
+
+    var rest=vids.slice(1), i=0;
+    function warmNext(){
+      if(i>=rest.length) return;
+      var v=rest[i++];
+      v.preload="auto";
+      try{ v.load(); }catch(_){}
+      var p=v.play(); if(p&&p.catch)p.catch(function(){});
+      // advance to the next clip once this one has buffered enough, with a time-based safety net
+      var go=function(){ clearTimeout(t); v.removeEventListener("canplaythrough",go); warmNext(); };
+      v.addEventListener("canplaythrough",go);
+      var t=setTimeout(go,1500);
+    }
+    var first=vids[0];
+    if(first.readyState>=3){ warmNext(); }            // already buffered
+    else {
+      first.addEventListener("canplay",function once(){ first.removeEventListener("canplay",once); warmNext(); });
+      window.addEventListener("load",function(){ if(i===0) warmNext(); }); // safety net if canplay never fires
+    }
   })();
 
   /* ====== living thumbnails: play clips only while they're on screen ====== */
@@ -905,12 +906,12 @@
   var mForm=document.getElementById("mForm"), mOk=document.getElementById("mOk");
   var mEmail=document.getElementById("mEmail"), mSubmit=document.getElementById("mSubmit");
   var mTitle=document.getElementById("mTitle"), mCopy=document.getElementById("mCopy"), mEyebrow=document.getElementById("mEyebrow");
-  var mSubmitHTML=mSubmit.innerHTML; // preserve the two-line "informative CTA" markup across loading states
+  var mSubmitHTML=mSubmit.innerHTML; // preserve the button label across loading states
   var ctx={};
   var TIER_COPY={
-    free:{eyebrow:"Free preview",title:"See your first film free",copy:"Upload your trip and watch the whole film, sound and all — free and watermarked. Add your email and we'll send your invite to start."},
-    standard:{eyebrow:"Standard · "+fmt(PRICES.standard)+" (was "+fmt(PRICE_OLD.standard)+")",title:"Reserve your film in 1080p",copy:"Lock in early-adopter pricing on your full 1080p film — no watermark, download, share and keep it forever. We'll email your invite shortly."},
-    cinema:{eyebrow:"Cinema 4K · "+fmt(PRICES.cinema)+" (was "+fmt(PRICE_OLD.cinema)+")",title:"Reserve the 4K edition",copy:"Everything in Standard, in stunning 4K with priority rendering — at early-adopter pricing. We'll email your invite shortly."},
+    free:{eyebrow:"Your first film",title:"Your first film is free",copy:"Upload your trip and we'll make a real film of it — full HD, no watermark, yours to keep and share. Add your email and we'll send your invite to start."},
+    standard:{eyebrow:"Standard · "+fmt(PRICES.standard)+" (was "+fmt(PRICE_OLD.standard)+")",title:"Make more films in 1080p",copy:"After your free first film, make more for "+fmt(PRICES.standard)+" each in full 1080p — founding-member pricing, locked in for life. Love it or it's free. We'll email your invite shortly."},
+    cinema:{eyebrow:"Cinema 4K · "+fmt(PRICES.cinema)+" (was "+fmt(PRICE_OLD.cinema)+")",title:"Reserve the 4K edition",copy:"Everything in Standard, in stunning 4K with priority rendering — at founding-member pricing locked for life. Love it or it's free. We'll email your invite shortly."},
     gift:{eyebrow:"Gift a film · "+fmt(PRICES.standard),title:"Give a film they'll never forget",copy:"Pop in your own email — we'll send you a gift link to share whenever you're ready, so there's no need for the recipient's details now. Your invite comes first."}
   };
   function openModal(reset){ if(reset){mForm.style.display="block";mOk.style.display="none";mEmail.value="";} overlay.classList.add("on");overlay.setAttribute("aria-hidden","false");setTimeout(function(){mEmail.focus();},50); }
