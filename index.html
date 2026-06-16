@@ -205,7 +205,8 @@
   .ha-film{position:relative;flex:none;width:clamp(260px,32vw,400px);aspect-ratio:16/9;border-radius:18px;overflow:hidden;background:linear-gradient(160deg,#243660,#151d38);box-shadow:0 44px 78px -36px rgba(21,29,56,.72),0 0 0 1px rgba(255,255,255,.06);-webkit-mask-image:-webkit-radial-gradient(#fff,#000);mask-image:radial-gradient(#fff,#000);animation:ha-glow 4.4s ease-in-out infinite}
   .ha-film video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1}
   .ha-vig{position:absolute;inset:0;z-index:2;pointer-events:none;box-shadow:inset 0 0 90px 18px rgba(0,0,0,.4);background:radial-gradient(125% 80% at 50% 122%,rgba(0,0,0,.42),transparent 60%)}
-  .ha-play{position:absolute;z-index:3;left:50%;top:50%;transform:translate(-50%,-50%);width:clamp(52px,6vw,66px);height:clamp(52px,6vw,66px);border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.16);backdrop-filter:blur(3px);border:1.5px solid rgba(255,255,255,.6)}
+  .ha-play{position:absolute;z-index:3;left:50%;top:50%;transform:translate(-50%,-50%);width:clamp(52px,6vw,66px);height:clamp(52px,6vw,66px);border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.16);backdrop-filter:blur(3px);border:1.5px solid rgba(255,255,255,.6);transition:opacity .35s ease}
+  .ha-film.is-playing .ha-play{opacity:0;pointer-events:none}
   .ha-play svg{margin-left:4px}
   .ha-4k{position:absolute;z-index:4;top:11px;right:11px;font-size:11px;font-weight:800;letter-spacing:.04em;color:#fff;background:rgba(222,84,54,.94);border-radius:6px;padding:4px 8px;line-height:1}
   .ha-sound{position:absolute;z-index:4;left:50%;bottom:12px;transform:translateX(-50%);display:inline-flex;align-items:center;gap:8px;color:rgba(255,255,255,.92)}
@@ -903,6 +904,12 @@
   (function(){
     var vids=[].slice.call(document.querySelectorAll(".theme video, video.hv-film"));
     if(!vids.length || reduce) return; // reduced-motion: leave the mood gradient as-is
+    vids.forEach(function(v){
+      var film=v.closest(".ha-film");
+      if(!film) return;
+      v.addEventListener("playing", function(){ film.classList.add("is-playing"); });
+      v.addEventListener("pause", function(){ film.classList.remove("is-playing"); });
+    });
     if(!("IntersectionObserver" in window)){
       vids.forEach(function(v){ var p=v.play(); if(p&&p.catch)p.catch(function(){}); });
       return;
